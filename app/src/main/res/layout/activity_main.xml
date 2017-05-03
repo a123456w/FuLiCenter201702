@@ -1,17 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cn.ucai.fulicenter.ui.activity.MainActivity">
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/tvNewGoods"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="新品"
+            android:gravity="center_horizontal"
+            android:layout_height="50dp"
+            android:drawableTop="@mipmap/menu_item_new_good_normal"/>
+        <TextView
+            android:id="@+id/tvBoutique"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="精选"
+            android:gravity="center_horizontal"
+            android:layout_height="50dp"
+            android:drawableTop="@mipmap/menu_item_boutique_normal"/>
+        <TextView
+            android:id="@+id/tvCategory"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="新品"
+            android:gravity="center_horizontal"
+            android:layout_height="50dp"
+            android:drawableTop="@mipmap/menu_item_category_normal"/>
+        <TextView
+            android:id="@+id/tvCart"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="购物车"
+            android:gravity="center_horizontal"
+            android:layout_height="50dp"
+            android:drawableTop="@mipmap/menu_item_cart_normal"/>
+        <TextView
+            android:id="@+id/tvCenter"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="我"
+            android:gravity="center_horizontal"
+            android:layout_height="50dp"
+            android:drawableTop="@mipmap/menu_item_personal_center_normal"/>
+    </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
 </RelativeLayout>
