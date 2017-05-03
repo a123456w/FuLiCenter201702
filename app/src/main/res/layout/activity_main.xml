@@ -20,14 +20,14 @@
                 android:checked="true"
                 android:textColor="#000"
                 style="@style/menu_item_style"
-                android:button="null"
+                android:button="@null"
                 android:drawableTop="@drawable/selector_menu_item_new_good"/>
             <RadioButton
                 android:id="@+id/tv_Boutique"
                 android:text="精品"
                 android:checked="false"
                 style="@style/menu_item_style"
-                android:button="null"
+                android:button="@null"
                 android:textColor="#000"
                 android:drawableTop="@drawable/selector_menu_item_boutique"/>
             <RadioButton
@@ -35,7 +35,7 @@
                 android:text="分类"
                 android:checked="false"
                 style="@style/menu_item_style"
-                android:button="null"
+                android:button="@null"
                 android:textColor="#000"
                 android:drawableTop="@drawable/selector_menu_item_new_good"/>
             <RadioButton
@@ -44,7 +44,7 @@
                 android:textColor="#000"
                 android:checked="false"
                 style="@style/menu_item_style"
-                android:button="null"
+                android:button="@null"
                 android:drawableTop="@drawable/selector_menu_item_new_good"/>
             <RadioButton
                 android:id="@+id/tv_Canter"
@@ -52,7 +52,7 @@
                 android:textColor="#000"
                 android:checked="false"
                 style="@style/menu_item_style"
-                android:button="null"
+                android:button="@null"
                 android:drawableTop="@drawable/selector_menu_item_new_good"/>
 
         </RadioGroup>
