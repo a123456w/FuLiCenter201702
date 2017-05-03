@@ -6,6 +6,7 @@
     android:background="@mipmap/splash">
     <TextView
         android:id="@+id/tvSplash"
+        android:onClick="on"
         android:text="@string/Splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
