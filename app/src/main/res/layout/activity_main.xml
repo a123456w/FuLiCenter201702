@@ -18,7 +18,6 @@
                 android:id="@+id/tv_New_Good"
                 android:text="新品"
                 android:checked="true"
-                android:textColor="#000"
                 style="@style/menu_item_style"
                 android:button="@null"
                 android:drawableTop="@drawable/selector_menu_item_new_good"/>
@@ -28,7 +27,7 @@
                 android:checked="false"
                 style="@style/menu_item_style"
                 android:button="@null"
-                android:textColor="#000"
+
                 android:drawableTop="@drawable/selector_menu_item_boutique"/>
             <RadioButton
                 android:id="@+id/tvCategory"
@@ -36,24 +35,21 @@
                 android:checked="false"
                 style="@style/menu_item_style"
                 android:button="@null"
-                android:textColor="#000"
-                android:drawableTop="@drawable/selector_menu_item_new_good"/>
+                android:drawableTop="@drawable/selector_menu_item_category"/>
             <RadioButton
                 android:id="@+id/tv_Cart"
-                android:text="新品"
-                android:textColor="#000"
+                android:text="购物车"
                 android:checked="false"
                 style="@style/menu_item_style"
                 android:button="@null"
-                android:drawableTop="@drawable/selector_menu_item_new_good"/>
+                android:drawableTop="@drawable/selector_menu_item_cart"/>
             <RadioButton
                 android:id="@+id/tv_Canter"
                 android:text="我"
-                android:textColor="#000"
                 android:checked="false"
                 style="@style/menu_item_style"
                 android:button="@null"
-                android:drawableTop="@drawable/selector_menu_item_new_good"/>
+                android:drawableTop="@drawable/selector_menu_item_personal_center"/>
 
         </RadioGroup>
 
