@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +25,15 @@ import cn.ucai.fulicenter.data.utils.ImageLoader;
 public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.GoodsViewHolder> {
     List<NewGoodsBean> list;
     Context context;
+    boolean isMroe;
+
+    public boolean isMroe() {
+        return isMroe;
+    }
+
+    public void setMroe(boolean mroe) {
+        isMroe = mroe;
+    }
 
     public NewGoodsAdapter(List<NewGoodsBean> list, Context context) {
         this.list = list;
@@ -47,7 +57,12 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.GoodsV
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size()+1;
+        return list == null ? 0 : list.size();
+    }
+
+    public void addDate(ArrayList<NewGoodsBean> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder {

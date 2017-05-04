@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,24 @@ public class GoodsFragment extends Fragment {
                 loadData();
             }
         });
+        rvGoods.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastVisibleItemPosition = gm.findLastVisibleItemPosition();
+                if(lastVisibleItemPosition==Adapter.getItemCount()-1
+                        &&newState==RecyclerView.SCROLL_STATE_IDLE
+                        &&Adapter.isMroe()){
+                    pageId++;
+                    loadData();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private void loadData() {
@@ -94,11 +113,12 @@ public class GoodsFragment extends Fragment {
                             ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
                             updateUI(list);
                         }
+                        Adapter.setMroe(result.length==pageSize&&result!=null);
                     }
 
                     @Override
                     public void onError(String error) {
-
+                        Log.e("main",error.toString());
                     }
                 });
 
@@ -108,6 +128,8 @@ public class GoodsFragment extends Fragment {
         if(Adapter==null){
             Adapter=new NewGoodsAdapter(list,getContext());
             rvGoods.setAdapter(Adapter);
+        }else {
+            Adapter.addDate(list);
         }
     }
 
