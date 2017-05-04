@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.ui.fiagment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,8 +69,19 @@ public class GoodsFragment extends Fragment {
         gm=new GridLayoutManager(getContext(), I.COLUM_NUM);
         rvGoods.setLayoutManager(gm);
         rvGoods.setAdapter(Adapter);
+        initView();
         loadData();
         setListener();
+
+    }
+
+    private void initView() {
+        srl.setColorSchemeColors(
+                getResources().getColor(R.color.google_blue),
+                getResources().getColor(R.color.google_green),
+                getResources().getColor(R.color.google_red),
+                getResources().getColor(R.color.google_yellow)
+        );
     }
 
     private void setListener() {
