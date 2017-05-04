@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.data.net.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,23 +32,25 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.GoodsV
 
     @Override
     public GoodsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("main", "onCreateViewHolder");
         return new GoodsViewHolder(View.inflate(context, R.layout.item_goods, null));
     }
 
     @Override
     public void onBindViewHolder(GoodsViewHolder holder, int position) {
+        Log.i("main", "onBindViewHolder");
         NewGoodsBean bean = list.get(position);
         holder.tvGoodsName.setText(bean.getGoodsName());
         holder.tvGoodsPrice.setText(bean.getPromotePrice());
-        ImageLoader.downloadImg(context,holder.ivGoodsThumb,bean.getGoodsThumb());
+        ImageLoader.downloadImg(context, holder.ivGoodsThumb, bean.getGoodsThumb());
     }
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size();
+        return list == null ? 0 : list.size()+1;
     }
 
-    class GoodsViewHolder extends RecyclerView.ViewHolder{
+    class GoodsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivGoodsThumb)
         ImageView ivGoodsThumb;
         @BindView(R.id.tvGoodsName)
@@ -62,4 +65,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<NewGoodsAdapter.GoodsV
             ButterKnife.bind(this, view);
         }
     }
+
+
 }

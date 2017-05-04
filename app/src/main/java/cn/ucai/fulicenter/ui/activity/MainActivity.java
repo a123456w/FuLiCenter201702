@@ -10,6 +10,7 @@ import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.IDownNewGood;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
+import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,26 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
     public void onCheckedChange(View v){
-        textDownload();
+        getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout,new GoodsFragment()).commit();
     }
-    void textDownload(){
-        IDownNewGood newgood=new DownNewGoodMode();
-        newgood.DownNewGoodData(MainActivity.this, 0, 1, 10,
-                new OnCompleteListener<NewGoodsBean[]>() {
-                    @Override
-                    public void onSuccess(NewGoodsBean[] result) {
-                        Log.i("main" ,"result="+result);
-                        if(result!=null){
-                            for (NewGoodsBean bean : result) {
-                                Log.i("main" ,bean.toString());
-                            }
-                        }
-                    }
 
-                    @Override
-                    public void onError(String error) {
-
-                    }
-                });
-    }
 }
+
