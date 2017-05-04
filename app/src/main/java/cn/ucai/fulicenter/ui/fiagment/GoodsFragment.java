@@ -125,7 +125,9 @@ public class GoodsFragment extends Fragment {
                             ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
                             updateUI(list);
                         }
-                        Adapter.setMroe(result.length==pageSize&&result!=null);
+                        if(Adapter!=null){
+                            Adapter.setMroe(result.length==pageSize&&result!=null);
+                        }
 
                     }
 

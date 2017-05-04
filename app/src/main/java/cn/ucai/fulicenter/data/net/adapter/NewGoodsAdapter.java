@@ -98,8 +98,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView tvGoodsName;
         @BindView(R.id.tvGoodsPrice)
         TextView tvGoodsPrice;
-        @BindView(R.id.layoutgoods)
-        LinearLayout layoutgoods;
 
         GoodsViewHolder(View view) {
             super(view);

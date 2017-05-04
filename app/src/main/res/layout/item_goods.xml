@@ -3,9 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:id="@+id/layoutgoods">
+    android:id="@+id/LinearLayout"
+    android:orientation="horizontal"
+    android:paddingRight="1dp"
+    android:paddingLeft="1dp">
+    <TextView
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="#678"/>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="250dp"
@@ -26,6 +37,16 @@
         android:layout_height="wrap_content"
         android:text="sdfjasdfadsfasdfasdfadsfadsf"
         android:layout_gravity="center"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#678"/>
 
 </LinearLayout>
+    <TextView
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="#678"/>
+</LinearLayout>
+
+
