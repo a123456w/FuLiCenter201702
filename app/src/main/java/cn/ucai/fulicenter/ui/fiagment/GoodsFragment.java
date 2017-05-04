@@ -66,7 +66,7 @@ public class GoodsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mode=new DownNewGoodMode();
-        gm=new GridLayoutManager(getContext(), I.COLUM_NUM);
+        gm=new GridLayoutManager(getContext(),I.COLUM_NUM);
         rvGoods.setLayoutManager(gm);
         rvGoods.setAdapter(Adapter);
         initView();
@@ -128,7 +128,6 @@ public class GoodsFragment extends Fragment {
                         if(Adapter!=null){
                             Adapter.setMroe(result.length==pageSize&&result!=null);
                         }
-
                     }
 
                     @Override
@@ -141,7 +140,7 @@ public class GoodsFragment extends Fragment {
 
     private void updateUI(ArrayList<NewGoodsBean> list) {
         if(Adapter==null){
-            Adapter=new NewGoodsAdapter(list,getContext());
+            Adapter=new NewGoodsAdapter(list,getContext(),gm);
             rvGoods.setAdapter(Adapter);
         }else {
             Adapter.addDate(list);

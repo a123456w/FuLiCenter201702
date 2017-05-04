@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.data.net.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     Context context;
     boolean isMroe;
 
+    GridLayoutManager gm1;
+
+
     public boolean isMroe() {
         return isMroe;
     }
@@ -38,9 +42,10 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public NewGoodsAdapter(List<NewGoodsBean> list, Context context) {
+    public NewGoodsAdapter(List<NewGoodsBean> list, Context context, GridLayoutManager gm1) {
         this.list = list;
         this.context = context;
+        this.gm1 = gm1;
     }
 
     @Override
@@ -57,11 +62,13 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holders, int position) {
         if(getItemViewType(position)==TYPE_FOOTER){
+
             FooterViewHolder holder= (FooterViewHolder) holders;
             holder.tvFooter.setVisibility(View.VISIBLE);
             holder.tvFooter.setText(getFooter());
             return;
         }
+
         NewGoodsBean bean = list.get(position);
         GoodsViewHolder holder= (GoodsViewHolder) holders;
         holder.tvGoodsName.setText(bean.getGoodsName());
@@ -75,7 +82,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return list == null ? 0 : list.size() + 1;
+        return list == null ? 1 : list.size() + 1;
     }
 
     @Override
@@ -91,6 +98,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+
     class GoodsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivGoodsThumb)
         ImageView ivGoodsThumb;
@@ -101,6 +109,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GoodsViewHolder(View view) {
             super(view);
+            gm1.setSpanCount(2);
             ButterKnife.bind(this, view);
         }
     }
@@ -112,6 +121,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         FooterViewHolder(View view) {
             super(view);
+            gm1.setSpanCount(1);
             ButterKnife.bind(this, view);
         }
     }
