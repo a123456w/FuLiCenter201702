@@ -9,7 +9,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.IDownNewGood;
-import cn.ucai.fulicenter.data.utils.OkHttpUtils;
+import cn.ucai.fulicenter.data.net.OnCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     void textDownload(){
         IDownNewGood newgood=new DownNewGoodMode();
         newgood.DownNewGoodData(MainActivity.this, 0, 1, 10,
-                new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+                new OnCompleteListener<NewGoodsBean[]>() {
                     @Override
                     public void onSuccess(NewGoodsBean[] result) {
                         Log.i("main" ,"result="+result);

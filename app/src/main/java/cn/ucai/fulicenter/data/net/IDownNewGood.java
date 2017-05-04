@@ -11,6 +11,6 @@ import cn.ucai.fulicenter.data.utils.OkHttpUtils;
  */
 
 public interface IDownNewGood {
-    void DownNewGoodData(Context context, int id, int pageid, int pageSize, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener);
+    void DownNewGoodData(Context context, int id, int pageid, int pageSize, OnCompleteListener<NewGoodsBean[]> listener);
 
 }
