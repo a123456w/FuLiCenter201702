@@ -43,6 +43,11 @@ public class GoodsFragment extends Fragment {
     NewGoodsAdapter Adapter;
     GridLayoutManager gm;
     DownNewGoodMode mode;
+
+    int catId=I.CAT_ID;
+    int pageId=1;
+    int pageSize=I.PAGE_SIZE_DEFAULT;
+
     public GoodsFragment() {
     }
 
@@ -63,12 +68,28 @@ public class GoodsFragment extends Fragment {
         rvGoods.setLayoutManager(gm);
         rvGoods.setAdapter(Adapter);
         loadData();
+        setListener();
     }
+
+    private void setListener() {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageId=1;
+                tvDownHint.setVisibility(View.VISIBLE);
+                srl.setRefreshing(true);
+                loadData();
+            }
+        });
+    }
+
     private void loadData() {
-        mode.DownNewGoodData(getContext(), 0, 1, 10,
+        mode.DownNewGoodData(getContext(), catId, pageId, pageSize,
                 new OnCompleteListener<NewGoodsBean[]>() {
                     @Override
                     public void onSuccess(NewGoodsBean[] result) {
+                        srl.setRefreshing(false);
+                        tvDownHint.setVisibility(View.GONE);
                         if(result!=null){
                             ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
                             updateUI(list);
