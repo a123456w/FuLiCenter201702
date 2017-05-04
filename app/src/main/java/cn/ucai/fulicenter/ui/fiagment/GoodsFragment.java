@@ -126,11 +126,7 @@ public class GoodsFragment extends Fragment {
                             updateUI(list);
                         }
                         Adapter.setMroe(result.length==pageSize&&result!=null);
-                        if(!Adapter.isMroe()){
-                            Adapter.setFooter("没有更多数据了");
-                            return;
-                        }
-                        Adapter.setFooter("加载更多数据");
+
                     }
 
                     @Override

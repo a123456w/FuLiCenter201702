@@ -28,16 +28,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<NewGoodsBean> list;
     Context context;
     boolean isMroe;
-    String Footer;
-
-    public String getFooter() {
-        return Footer;
-    }
-
-    public void setFooter(String footer) {
-        Footer = footer;
-        notifyDataSetChanged();
-    }
 
     public boolean isMroe() {
         return isMroe;
@@ -45,6 +35,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public void setMroe(boolean mroe) {
         isMroe = mroe;
+        notifyDataSetChanged();
     }
 
     public NewGoodsAdapter(List<NewGoodsBean> list, Context context) {
@@ -76,6 +67,10 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.tvGoodsName.setText(bean.getGoodsName());
         holder.tvGoodsPrice.setText(bean.getPromotePrice());
         ImageLoader.downloadImg(context, holder.ivGoodsThumb, bean.getGoodsThumb());
+    }
+
+    private int getFooter() {
+        return isMroe?R.string.load_more:R.string.no_more;
     }
 
     @Override
