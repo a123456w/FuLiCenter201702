@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.data.net;
 import android.content.Context;
 
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.BoutiqueBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.utils.OkHttpUtils;
 
@@ -19,6 +20,14 @@ public class DownNewGoodMode implements IDownNewGood {
                 .addParam(I.PAGE_ID,String.valueOf(pageid))
                 .addParam(I.PAGE_SIZE,String.valueOf(pageSize))
                 .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
+
+    @Override
+    public void DownBoutinue(Context context, OnCompleteListener<BoutiqueBean[]> listener) {
+        OkHttpUtils<BoutiqueBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
+                .targetClass(BoutiqueBean[].class)
                 .execute(listener);
     }
 }
