@@ -8,7 +8,6 @@
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_marginTop="24dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -33,6 +32,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/tvNoMore"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

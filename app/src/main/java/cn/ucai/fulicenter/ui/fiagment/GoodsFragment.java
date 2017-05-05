@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
@@ -27,6 +28,7 @@ import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.net.adapter.NewGoodsAdapter;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
+import cn.ucai.fulicenter.ui.view.SpaceItemDecoration;
 
 
 /**
@@ -57,7 +59,11 @@ public class GoodsFragment extends Fragment {
 
     public GoodsFragment() {
     }
-
+    @OnClick(R.id.tvNoMore)
+    public void onClick(View v){
+        dialog.show();
+        loadData();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,15 +76,10 @@ public class GoodsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mode=new DownNewGoodMode();
-        gm=new GridLayoutManager(getContext(),I.COLUM_NUM);
-        rvGoods.setLayoutManager(gm);
-        rvGoods.setAdapter(Adapter);
         initView();
         initDialog();
         loadData();
         setListener();
-
     }
 
     private void initDialog() {
@@ -88,6 +89,11 @@ public class GoodsFragment extends Fragment {
     }
 
     private void initView() {
+        mode=new DownNewGoodMode();
+        gm=new GridLayoutManager(getContext(),I.COLUM_NUM);
+
+        rvGoods.setLayoutManager(gm);
+        rvGoods.setAdapter(Adapter);
         srl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
@@ -101,8 +107,7 @@ public class GoodsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 pageId=1;
-                tvDownHint.setVisibility(View.VISIBLE);
-                srl.setRefreshing(true);
+                setVisibility(true);
                 loadData();
             }
         });
@@ -125,30 +130,35 @@ public class GoodsFragment extends Fragment {
             }
         });
     }
+    void setVisibility(boolean Visibility){
+        srl.setRefreshing(Visibility);
+        tvDownHint.setVisibility(Visibility?View.VISIBLE:View.GONE);
+    };
+    void setlistVisibility(boolean visibility){
+        tvNoMore.setVisibility(visibility?View.GONE:View.VISIBLE);
+        srl.setVisibility(visibility?View.VISIBLE:View.GONE);
+    }
 
     private void loadData() {
         mode.DownNewGoodData(getContext(), catId, pageId, pageSize,
                 new OnCompleteListener<NewGoodsBean[]>() {
                     @Override
                     public void onSuccess(NewGoodsBean[] result) {
-                        tvNoMore.setVisibility(View.GONE);
-                        srl.setVisibility(View.VISIBLE);
-                        srl.setRefreshing(false);
-                        tvDownHint.setVisibility(View.GONE);
-                        dialog.dismiss();
+                        setVisibility(false);
+                        setlistVisibility(true);
                         if(result!=null){
                             ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
                             updateUI(list);
+                            dialog.dismiss();
+                            Log.i("main",result.length+"");
                         }else {
                             if(Adapter==null){
-                                tvNoMore.setVisibility(View.VISIBLE);
-                                srl.setVisibility(View.GONE);
+                                setlistVisibility(false);
                             }
 
                         }
                         if(Adapter!=null){
-                            tvNoMore.setVisibility(View.VISIBLE);
-                            srl.setVisibility(View.GONE);
+                            setlistVisibility(true);
                             Adapter.setMroe(result.length==pageSize&&result!=null);
                         }
                     }
@@ -156,6 +166,7 @@ public class GoodsFragment extends Fragment {
                     @Override
                     public void onError(String error) {
                         dialog.dismiss();
+                       setlistVisibility(false);
                         Log.e("main",error.toString());
                     }
                 });
