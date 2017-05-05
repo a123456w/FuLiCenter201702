@@ -186,7 +186,13 @@ public class GoodsFragment extends Fragment {
             Adapter=new NewGoodsAdapter(list,getContext());
             rvGoods.setAdapter(Adapter);
         }else {
-            Adapter.addDate(list);
+            if(pageId==1){
+                Adapter.initData();
+                Adapter.addDate(list);
+            }else {
+                Adapter.addDate(list);
+            }
+
         }
     }
 
