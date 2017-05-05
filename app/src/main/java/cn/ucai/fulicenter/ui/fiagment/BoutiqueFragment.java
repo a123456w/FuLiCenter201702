@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
@@ -48,6 +49,12 @@ public class BoutiqueFragment extends Fragment {
     DownNewGoodMode mode;
     ProgressDialog dialog;
     BoutiqueAdapter adapter;
+
+    @OnClick(R.id.tvNoMore)
+    public void onClick(View v){
+        dialog.show();
+        download();
+    }
 
     public BoutiqueFragment() {
     }

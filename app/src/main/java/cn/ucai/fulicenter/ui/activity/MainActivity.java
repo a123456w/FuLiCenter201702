@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFragment() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.FrameLayout,mGoodsFragment)
-                .add(R.id.FrameLayout,mBoutiqueFragment)
+                .add(R.id.FrameLayout,mFragments[0])
+                .add(R.id.FrameLayout,mFragments[1])
                 .show(mGoodsFragment)
                 .hide(mBoutiqueFragment)
                 .commit();
