@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_boutique"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <include
        android:id="@+id/Layout_Title" layout="@layout/common_title"/>
     <FrameLayout
+        android:layout_below="@id/Layout_Title"
         android:id="@+id/BoutiqueFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

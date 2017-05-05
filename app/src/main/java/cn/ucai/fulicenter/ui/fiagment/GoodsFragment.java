@@ -59,6 +59,9 @@ public class GoodsFragment extends Fragment {
 
     public GoodsFragment() {
     }
+    public GoodsFragment(int catId) {
+        this.catId=catId;
+    }
     @OnClick(R.id.tvNoMore)
     public void onClick(View v){
         dialog.show();
