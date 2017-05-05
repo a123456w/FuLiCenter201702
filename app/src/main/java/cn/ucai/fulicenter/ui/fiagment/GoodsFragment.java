@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.ui.fiagment;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -41,10 +42,14 @@ public class GoodsFragment extends Fragment {
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
     Unbinder unbinder;
+    @BindView(R.id.tvNoMore)
+    TextView tvNoMore;
 
     NewGoodsAdapter Adapter;
     GridLayoutManager gm;
     DownNewGoodMode mode;
+    ProgressDialog dialog;
+
 
     int catId=I.CAT_ID;
     int pageId=1;
@@ -70,9 +75,16 @@ public class GoodsFragment extends Fragment {
         rvGoods.setLayoutManager(gm);
         rvGoods.setAdapter(Adapter);
         initView();
+        initDialog();
         loadData();
         setListener();
 
+    }
+
+    private void initDialog() {
+        dialog=new ProgressDialog(getContext());
+        dialog.setMessage(getString(R.string.load_more));
+        dialog.show();
     }
 
     private void initView() {
@@ -119,19 +131,31 @@ public class GoodsFragment extends Fragment {
                 new OnCompleteListener<NewGoodsBean[]>() {
                     @Override
                     public void onSuccess(NewGoodsBean[] result) {
+                        tvNoMore.setVisibility(View.GONE);
+                        srl.setVisibility(View.VISIBLE);
                         srl.setRefreshing(false);
                         tvDownHint.setVisibility(View.GONE);
+                        dialog.dismiss();
                         if(result!=null){
                             ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
                             updateUI(list);
+                        }else {
+                            if(Adapter==null){
+                                tvNoMore.setVisibility(View.VISIBLE);
+                                srl.setVisibility(View.GONE);
+                            }
+
                         }
                         if(Adapter!=null){
+                            tvNoMore.setVisibility(View.VISIBLE);
+                            srl.setVisibility(View.GONE);
                             Adapter.setMroe(result.length==pageSize&&result!=null);
                         }
                     }
 
                     @Override
                     public void onError(String error) {
+                        dialog.dismiss();
                         Log.e("main",error.toString());
                     }
                 });

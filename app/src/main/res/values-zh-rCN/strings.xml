@@ -4,6 +4,7 @@
     <string name="Version_number_is_wrong">版本号错误</string>
     <string name="now_refresh">刷新中…</string>
     <string name="no_more">没有更多数据了…</string>
+
     <string name="load_more">加载更多数据…</string>
     <string name="user_name">用户名</string>
     <string name="nickname">昵称</string>
