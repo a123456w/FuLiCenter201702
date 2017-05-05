@@ -60,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFragment() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.FrameLayout,mFragments[index]);
-        fragmentTransaction.commit();
+        if (!mFragments[cIndex].isAdded()) {
+            fragmentTransaction.add(R.id.FrameLayout,mFragments[cIndex]);
+        }
+        if (index != cIndex) {
+            fragmentTransaction.hide(mFragments[cIndex]);
+            fragmentTransaction.show(mFragments[index]).commit();
+        }
         cIndex=index;
     }
 
