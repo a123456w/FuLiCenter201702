@@ -77,9 +77,9 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         holder.GoodsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int goodsId = bean.getGoodsId();
+
                 context.startActivity(new Intent(context, Goods2Activity.class)
-                        .putExtra(I.Goods.KEY_GOODS_ID,goodsId));
+                        .putExtra(I.Goods.KEY_GOODS_ID,bean.getGoodsId()));
             }
         });
         ImageLoader.downloadImg(context, holder.ivGoodsThumb, bean.getGoodsThumb());

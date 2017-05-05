@@ -34,9 +34,9 @@ public class DownNewGoodMode implements IDownNewGood {
 
     @Override
     public void DownGoodsDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener) {
-        OkHttpUtils<GoodsDetailsBean> utils=new  OkHttpUtils<GoodsDetailsBean>(context);
-        utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS)
-                .addParam(I.REQUEST_FIND_GOODS_DETAILS,""+goodsId)
+        OkHttpUtils<GoodsDetailsBean> utils=new  OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
+                .addParam(I.Goods.KEY_GOODS_ID,""+goodsId)
                 .targetClass(GoodsDetailsBean.class)
                 .execute(listener);
     }
