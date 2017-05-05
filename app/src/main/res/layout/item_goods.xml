@@ -2,9 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     android:background="@color/white"
-    android:id="@+id/LinearLayout"
+    android:id="@+id/GoodsLinearLayout"
     android:orientation="horizontal"
     android:paddingRight="1dp"
     android:paddingLeft="1dp">
@@ -28,6 +28,7 @@
         android:id="@+id/tvGoodsName"
         android:gravity="center"
         android:background="#eee"
+        android:textSize="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="sdfjasdfadsfasdfasdfadsfadsf"
@@ -36,6 +37,7 @@
         android:paddingTop="20dp"
         android:id="@+id/tvGoodsPrice"
         android:gravity="center"
+        android:textSize="10dp"
         android:background="#eee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
