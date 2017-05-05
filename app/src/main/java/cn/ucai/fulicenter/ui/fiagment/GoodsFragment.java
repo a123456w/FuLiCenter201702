@@ -91,7 +91,15 @@ public class GoodsFragment extends Fragment {
     private void initView() {
         mode=new DownNewGoodMode();
         gm=new GridLayoutManager(getContext(),I.COLUM_NUM);
-
+        gm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(Adapter==null||position==Adapter.getItemCount()-1){
+                    return I.COLUM_NUM;
+                }
+                return 1;
+            }
+        });
         rvGoods.setLayoutManager(gm);
         rvGoods.setAdapter(Adapter);
         srl.setColorSchemeColors(
