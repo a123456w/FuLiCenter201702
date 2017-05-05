@@ -183,7 +183,7 @@ public class GoodsFragment extends Fragment {
 
     private void updateUI(ArrayList<NewGoodsBean> list) {
         if(Adapter==null){
-            Adapter=new NewGoodsAdapter(list,getContext(),gm);
+            Adapter=new NewGoodsAdapter(list,getContext());
             rvGoods.setAdapter(Adapter);
         }else {
             Adapter.addDate(list);

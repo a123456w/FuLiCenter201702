@@ -31,8 +31,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     Context context;
     boolean isMroe;
 
-    GridLayoutManager gm1;
-
 
     public boolean isMroe() {
         return isMroe;
@@ -43,10 +41,9 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public NewGoodsAdapter(List<NewGoodsBean> list, Context context, GridLayoutManager gm1) {
+    public NewGoodsAdapter(List<NewGoodsBean> list, Context context) {
         this.list = list;
         this.context = context;
-        this.gm1 = gm1;
     }
 
     @Override
@@ -63,7 +60,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holders, int position) {
         if(getItemViewType(position)==TYPE_FOOTER){
-
             FooterViewHolder holder= (FooterViewHolder) holders;
             holder.tvFooter.setVisibility(View.VISIBLE);
             holder.tvFooter.setText(getFooter());
@@ -110,7 +106,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         GoodsViewHolder(View view) {
             super(view);
-            gm1.setSpanCount(2);
             Unbinder bind = ButterKnife.bind(this, view);
         }
     }
@@ -122,7 +117,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         FooterViewHolder(View view) {
             super(view);
-            gm1.setSpanCount(1);
             ButterKnife.bind(this, view);
         }
     }
