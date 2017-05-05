@@ -14,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
@@ -110,7 +111,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         GoodsViewHolder(View view) {
             super(view);
             gm1.setSpanCount(2);
-            ButterKnife.bind(this, view);
+            Unbinder bind = ButterKnife.bind(this, view);
         }
     }
 
