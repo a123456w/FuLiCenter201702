@@ -4,42 +4,41 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.icu.util.Measure;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import cn.ucai.fulicenter.R;
 
+
 /**
- * Created by Administrator on 2017/5/5 0005.
+ * Created by yao on 2016/12/28.
  */
 
 public class FlowIndicator extends View {
-    private int mCount;
-    private int mRadius;
-    private int mSpace;
-    private int mFucos;
-    private int mNormalColor;
-    private int mFocusColor;
-
-    public int getFucos() {
-        return mFucos;
-    }
-
-    public void setFucos(int mFucos) {
-        this.mFucos = mFucos;
-        invalidate();
-    }
-
-    public int getCount() {
-        return mCount;
-    }
-
-    public void setCount(int mCount) {
-        this.mCount = mCount;
-    }
+    int mCount;
+    int mRadius;
+    int mSpace;
+    int mNormalColor;
+    int mFocusColor;
+    int mFocus;
 
     Paint mPaint;
+
+    public void setCount(int count) {
+        this.mCount = count;
+        requestLayout();
+//        invalidate();
+    }
+
+    public int getFocus() {
+        return mFocus;
+    }
+
+    public void setFocus(int focus) {
+        this.mFocus = focus;
+        invalidate();
+    }
 
     public FlowIndicator(Context context) {
         super(context);
@@ -48,59 +47,56 @@ public class FlowIndicator extends View {
     public FlowIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FlowIndicator);
-        mCount=array.getInt(R.styleable.FlowIndicator_count,0);
-        mRadius=array.getInt(R.styleable.FlowIndicator_r,10);
-        mSpace=array.getInt(R.styleable.FlowIndicator_space,10);
-        mFucos=array.getInt(R.styleable.FlowIndicator_focus,0);
-        mFocusColor=array.getInt(R.styleable.FlowIndicator_focus_color,0x000000);
-        mNormalColor=array.getInt(R.styleable.FlowIndicator_normal_color,0xcccccc);
+        mCount = array.getInt(R.styleable.FlowIndicator_count, 2);
+        mSpace = array.getDimensionPixelSize(R.styleable.FlowIndicator_space, 10);
+        mFocusColor = array.getColor(R.styleable.FlowIndicator_focus_color, 0xfff);
+        mNormalColor = array.getColor(R.styleable.FlowIndicator_normal_color, 0xfff);
+        mRadius = array.getDimensionPixelOffset(R.styleable.FlowIndicator_r, 15);
 
-
-        mPaint=new Paint();
-        mPaint.setAntiAlias(true);
-
-
+        setCount(mCount);
+        setFocus(mFocus);
 
         array.recycle();
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureSpecWidth(widthMeasureSpec),measureSpecHeight(heightMeasureSpec));
+        Log.i("main", "onMeasure()");
+        setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
     }
 
-    private int measureSpecHeight(int heightMeasureSpec) {
+    private int measureHeight(int heightMeasureSpec) {
         int mode = MeasureSpec.getMode(heightMeasureSpec);
         int size = MeasureSpec.getSize(heightMeasureSpec);
         int result=size;
-        if(mode==MeasureSpec.AT_MOST){
-            result=getPaddingBottom()+getPaddingTop()+mRadius*2;
-            result=Math.min(result,size);
+        if (mode != MeasureSpec.EXACTLY) {
+            size=getPaddingBottom()+getPaddingTop()+2*mRadius;
+            result = Math.min(result, size);
         }
         return result;
-
     }
 
-    private int measureSpecWidth(int widthMeasureSpec) {
+    private int measureWidth(int widthMeasureSpec) {
         int mode = MeasureSpec.getMode(widthMeasureSpec);
         int size = MeasureSpec.getSize(widthMeasureSpec);
         int result=size;
-        if (mode==MeasureSpec.AT_MOST){
-            result=getPaddingLeft()+getPaddingRight()+mRadius*mCount+(mCount-1)*mSpace;
-            result=Math.min(result,size);
+        if (mode != MeasureSpec.EXACTLY) {
+            size=getPaddingLeft()+getPaddingRight()+mCount*2*mRadius+(mCount-1)*mSpace;
+            result = Math.min(result, size);
         }
         return result;
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setStyle(Paint.Style.FILL);
-        for (int i=0;i<mCount;i++){
-            int color=mFucos==i?mFocusColor:mNormalColor;
+        for(int i=0;i<mCount;i++) {
+            int color=mFocus==i?mFocusColor:mNormalColor;
             mPaint.setColor(color);
-            int x = mRadius+mRadius*i*2+i*mSpace;
+            int x=mRadius+i*2*mRadius+i*mSpace;
             canvas.drawCircle(x,mRadius,mRadius,mPaint);
         }
     }

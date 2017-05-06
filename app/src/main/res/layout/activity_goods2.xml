@@ -1,63 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_goods2"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    >
-    <include android:id="@+id/inc" layout="@layout/common_title"/>
+    android:layout_height="match_parent">
+    <include android:id="@+id/Layout_Title" layout="@layout/common_title"/>
+    
     <LinearLayout
-        android:paddingTop="30dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:id="@+id/LinearLayout"
+        android:layout_below="@id/Layout_Title"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvEnglishName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="asdfasdf" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="asdfasdf"/>
-            <TextView
-                android:id="@+id/tvCurrencyPrice"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="asdfasdf"/>
-        </LinearLayout>
-        <cn.ucai.fulicenter.ui.view.FlowIndicator
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="sdfadsfadsfad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:count="4"
-            android:src="@drawable/nopic"/>
-        <TextView
-            android:paddingTop="20dp"
-            android:id="@+id/tvBrief"
-            android:text="asdfdsagfadsgadsgadsgasd"
-            android:gravity="center"
-
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/RelativeLayout"
+        android:layout_below="@id/LinearLayout"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvName"
+            android:text="蛋糕"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvCurrencyPrice"
+            android:paddingRight="20dp"
+            android:text="￥1001"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+   <cn.ucai.fulicenter.ui.view.AutoFlowIndicator
+       android:id="@+id/AutoFlowIndicator"
+       android:layout_width="wrap_content"
+       android:layout_height="200dp"
+       android:layout_below="@id/RelativeLayout"/>
+    <cn.ucai.fulicenter.ui.view.FlowIndicator
+        android:id="@+id/FlowIndicator"
+        android:layout_below="@id/AutoFlowIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:focus="0"
+        app:space="15sp"
+        app:normal_color="#ccc"
+        app:focus_color="#f00"
+        app:r="15dp"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/tvBrief"
+        android:text="123213"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/FlowIndicator"
+        android:layout_centerHorizontal="true"/>
 
 
 
 
-</LinearLayout>
+
+
+
+</RelativeLayout>
