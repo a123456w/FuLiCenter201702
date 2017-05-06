@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Scroller;
 
 import java.lang.reflect.Field;
@@ -14,9 +16,7 @@ import java.util.TimerTask;
 
 import cn.ucai.fulicenter.data.net.adapter.GoodsPageAdapter;
 
-/**
- * Created by Administrator on 2017/5/6 0006.
- */
+
 
 public class AutoFlowIndicator extends ViewPager {
     FlowIndicator mFlowIndicator;
@@ -24,6 +24,27 @@ public class AutoFlowIndicator extends ViewPager {
     Timer mTimer;
     Handler mHandler;
     List<String> mList;
+    boolean isMore=true;
+    int anInt;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        int action = ev.getAction();
+        switch (action){
+            case 0:
+                isMore=false;
+
+                break;
+            case 1:
+                isMore=true;
+                break;
+            case 2:
+                isMore=false;
+
+                break;
+        }
+        return super.onTouchEvent(ev);
+    }
 
     public AutoFlowIndicator(Context context) {
         super(context);
@@ -39,7 +60,9 @@ public class AutoFlowIndicator extends ViewPager {
         mHandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                AutoFlowIndicator.this.setCurrentItem(getCurrentItem()+1);
+                if(isMore){
+                    AutoFlowIndicator.this.setCurrentItem(getCurrentItem()+1);
+                }
             }
         };
     }
@@ -73,7 +96,7 @@ public class AutoFlowIndicator extends ViewPager {
         mFlowIndicator.setCount(mCount);
 
 
-        MyScroller myScroller = new MyScroller(context);
+        final MyScroller myScroller = new MyScroller(context);
         myScroller.setDuration(2000);
         try {
             Field filed = ViewPager.class.getDeclaredField("mScroller");
@@ -87,13 +110,18 @@ public class AutoFlowIndicator extends ViewPager {
         }
 
         mTimer=new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(0);
-            }
-        },0,2000);
+        if(isMore) {
+            mTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
 
+
+                        mHandler.sendEmptyMessage(0);
+
+
+                }
+            }, 4000, 3000);
+        }
     }
     class MyScroller extends Scroller {
         int duration;

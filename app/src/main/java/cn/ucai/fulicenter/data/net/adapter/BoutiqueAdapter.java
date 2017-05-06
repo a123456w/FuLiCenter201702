@@ -38,7 +38,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<BoutiqueAdapter.Boutiq
     }
 
     @Override
-    public void onBindViewHolder(BoutiqueViewHolder holder, int position) {
+    public void onBindViewHolder(BoutiqueViewHolder holder, final int position) {
         final BoutiqueBean bean = list.get(position);
         holder.tvTitle.setText(bean.getTitle());
         holder.tvManages.setText(bean.getName());
@@ -49,6 +49,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<BoutiqueAdapter.Boutiq
                 context.startActivity(new Intent(context, BoutiqueActivity.class)
                         .putExtra(I.NewAndBoutiqueGoods.CAT_ID,bean.getId())
                         .putExtra(I.Boutique.TITLE,bean.getTitle())
+                        .putExtra("name",bean.getName())
                 );
             }
         });
@@ -71,7 +72,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<BoutiqueAdapter.Boutiq
     class BoutiqueViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.ivBoutiqueImg)
         ImageView ivBoutiqueImg;
-        @BindView(R.id.tvTitle)
+        @BindView(R.id.tv1Title)
         TextView tvTitle;
         @BindView(R.id.tvManages)
         TextView tvManages;

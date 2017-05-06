@@ -3,6 +3,8 @@ package cn.ucai.fulicenter.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +57,24 @@ public class Goods2Activity extends AppCompatActivity {
         mList = new ArrayList();
 
         mGoodsid = getIntent().getIntExtra(I.Goods.KEY_GOODS_ID, I.CAT_ID);
+
         DownDetails();
+        setListener();
+    }
+
+    private void setListener() {
+        AutoFlowIndicator.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return Goods2Activity.super.onTouchEvent(event);
+            }
+        });
+        ivTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void DownDetails() {
@@ -91,6 +110,7 @@ public class Goods2Activity extends AppCompatActivity {
         tvBrief.setText(data.getGoodsBrief());
         tvCurrencyPrice.setText(data.getCurrencyPrice());
         tvName.setText(data.getGoodsName());
+        tvTitle.setText(data.getGoodsName());
         Log.i("main", "data=" + data.toString());
     }
 }

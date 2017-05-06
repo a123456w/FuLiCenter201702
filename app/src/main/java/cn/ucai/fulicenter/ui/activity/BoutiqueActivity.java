@@ -39,7 +39,7 @@ public class BoutiqueActivity extends AppCompatActivity {
         Log.i("main", "catid.catid=" + catid);
         tvTitle.setText(title);
         getSupportFragmentManager().beginTransaction().add(R.id.BoutiqueFrameLayout, new GoodsFragment(catid)).commit();
-        RelativeLayout.setOnClickListener(new View.OnClickListener() {
+        ivTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -18,7 +18,7 @@
         android:layout_height="200dp"
         android:layout_toRightOf="@id/ivBoutiqueImg">
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tv1Title"
             android:text="ewrwerwerewrewrew"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
