@@ -127,9 +127,12 @@ public class GoodsFragment extends Fragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 int lastVisibleItemPosition = gm.findLastVisibleItemPosition();
-                if(Adapter!=null&&lastVisibleItemPosition==Adapter.getItemCount()-1
+                if(
+                        Adapter!=null
+                        &&lastVisibleItemPosition==Adapter.getItemCount()-1
                         &&newState==RecyclerView.SCROLL_STATE_IDLE
-                        &&Adapter.isMroe()){
+                        &&Adapter.isMroe()
+                        ){
                     pageId++;
                     loadData();
                 }

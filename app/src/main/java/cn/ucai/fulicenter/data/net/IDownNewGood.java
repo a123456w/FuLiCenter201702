@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import cn.ucai.fulicenter.data.bean.BoutiqueBean;
+import cn.ucai.fulicenter.data.bean.CategoryChildBean;
+import cn.ucai.fulicenter.data.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.utils.OkHttpUtils;
@@ -19,4 +21,8 @@ public interface IDownNewGood {
     void DownBoutinue(Context context, OnCompleteListener<BoutiqueBean[]> listener);
 
     void DownGoodsDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
+    void DownCategoryGorup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener);
+    void DownCategorychild(Context context,int child, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener);
+
+
 }
