@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.FrameLayout,mFragments[0])
                 .add(R.id.FrameLayout,mFragments[1])
                 .add(R.id.FrameLayout,mFragments[2])
-                .show(mGoodsFragment)
-                .hide(mBoutiqueFragment)
+                .show(mFragments[0])
+                .hide(mFragments[1])
+                .hide(mFragments[2])
                 .commit();
     }
 

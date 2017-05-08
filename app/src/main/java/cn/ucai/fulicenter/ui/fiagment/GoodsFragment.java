@@ -168,6 +168,7 @@ public class GoodsFragment extends Fragment {
                         }else {
 
                             if(Adapter==null){
+                                dialog.dismiss();
                                 setlistVisibility(false);
                             }
 
@@ -180,7 +181,6 @@ public class GoodsFragment extends Fragment {
 
                     @Override
                     public void onError(String error) {
-                        dialog.dismiss();
                        setlistVisibility(false);
                         Log.e("main",error.toString());
                     }

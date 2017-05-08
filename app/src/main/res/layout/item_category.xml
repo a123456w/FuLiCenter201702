@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/RelativeLayoutCategroy"
     android:layout_marginTop="8dp"
-    android:paddingTop="5dp"
     android:background="#fff"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="40dp">
     <ImageView
+        android:id="@+id/ivCategory"
         android:layout_centerVertical="true"
         android:paddingLeft="80dp"
-        android:id="@+id/ivCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/selector_menu_item_category"/>
     <TextView
+        android:id="@+id/tvCategoryName"
         android:layout_centerVertical="true"
-        android:id="@+id/tvCategory"
+        android:layout_toRightOf="@id/ivCategory"
         android:text="鞋子"
-        android:textSize="25dp"
+        android:textSize="20dp"
+        android:paddingLeft="20dp"
         android:textColor="#000"
-        android:layout_weight="1"
-        android:layout_alignParentRight="true"
-        android:paddingRight="80dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/ivCategoryoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingRight="50dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/expand_off"/>
 
 </RelativeLayout>
