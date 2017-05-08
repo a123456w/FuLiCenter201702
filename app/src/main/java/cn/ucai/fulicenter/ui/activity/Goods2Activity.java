@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class Goods2Activity extends AppCompatActivity {
     @BindView(R.id.FlowIndicator)
     cn.ucai.fulicenter.ui.view.FlowIndicator FlowIndicator;
     @BindView(R.id.wvBrief)
-    TextView wvBrief;
+    WebView wvBrief;
 
 
     @Override
@@ -99,14 +100,14 @@ public class Goods2Activity extends AppCompatActivity {
                 mList.add(bean.getImgUrl());
             }
         }
-        mAdapter=new GoodsPageAdapter(mList,this);
+        mAdapter = new GoodsPageAdapter(mList, this);
         AutoFlowIndicator.setAdapter(mAdapter);
-        AutoFlowIndicator.startPlay(this,mList,FlowIndicator);
+        AutoFlowIndicator.startPlay(this, mList, FlowIndicator);
     }
 
     private void setView(GoodsDetailsBean data) {
         tvEnglishName.setText(data.getGoodsEnglishName());
-        wvBrief.setText(data.getGoodsBrief());
+        wvBrief.loadDataWithBaseURL(null,data.getGoodsBrief(),null,I.UTF_8,null);
         tvCurrencyPrice.setText(data.getCurrencyPrice());
         tvName.setText(data.getGoodsName());
         tvTitle.setText(data.getGoodsName());
