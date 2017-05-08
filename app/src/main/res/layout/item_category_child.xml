@@ -3,7 +3,7 @@
     android:id="@+id/RelativeLayoutCategroy"
     android:layout_marginTop="8dp"
     android:paddingTop="5dp"
-    android:background="#ddd"
+    android:background="#ccc"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp">

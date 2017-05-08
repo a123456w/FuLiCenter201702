@@ -116,7 +116,7 @@ public class AutoFlowIndicator extends ViewPager {
                 public void run() {
                         mHandler.sendEmptyMessage(0);
                 }
-            }, 4000, 500);
+            }, 4000, 2000);
         }
     }
     class MyScroller extends Scroller {

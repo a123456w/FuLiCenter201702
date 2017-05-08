@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.data.net.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -45,6 +46,8 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
         return childList != null && childList.get(groupPosition) != null ? childList.get(groupPosition).size() : 0;
     }
 
+
+
     @Override
     public CategoryGroupBean getGroup(int groupPosition) {
         return groupList != null ? groupList.get(groupPosition) : null;
@@ -59,19 +62,19 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return getGroup(groupPosition).getId();
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childList.get((int) getGroupId(groupPosition)).get(childPosition).getId();
     }
 
     @Override
     public boolean hasStableIds() {
         return false;
     }
-
+int pageId;
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         CategoryViewHolder holder;
@@ -82,7 +85,9 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (CategoryViewHolder) convertView.getTag();
         }
+
         holder.bind(groupPosition, isExpanded);
+      Log.i("main","getGroupView");
         return convertView;
     }
 
@@ -97,6 +102,7 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
             holder= (ChildViewHolder) convertView.getTag();
         }
         holder.bind(groupPosition,childPosition);
+        Log.i("main","getChildView");
         return convertView;
     }
     @Override
@@ -138,11 +144,33 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
             ButterKnife.bind(this, view);
         }
         public void bind(int groupPosition, int childPosition) {
-            CategoryChildBean bean = getChild(groupPosition, childPosition);
+            CategoryGroupBean group = getGroup(groupPosition);
+            int i = groupList.indexOf(group);
+            Log.i("main","i"+i);
+         /*  switch (i){
+               case 3:
+                   i=4;
+                   break;
+               case 4:
+                   i=6;
+                   break;
+               case 5:
+                   i=3;
+                   break;
+               case 6:
+                   i=7;
+                   break;
+               case 7:
+                   i=5;
+                   break;
+           }*/
+
+            CategoryChildBean bean = getChild(i, childPosition);
             if(bean!=null){
                 ImageLoader.downloadImg(context,ivCategoryChild,bean.getImageUrl());
                 tvCategoryChildName.setText(bean.getName());
             }
         }
     }
+
 }
