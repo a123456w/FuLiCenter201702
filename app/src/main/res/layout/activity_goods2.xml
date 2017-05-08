@@ -61,12 +61,12 @@
         android:layout_centerHorizontal="true"
         />
     <WebView
-        android:id="@+id/wvBrief"
-        android:text="123213"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/FlowIndicator"
-        android:layout_centerHorizontal="true"/>
+    android:id="@+id/wvBrief"
+    android:text="123213"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:layout_below="@id/FlowIndicator"
+    android:layout_centerHorizontal="true"/>
 
 
 

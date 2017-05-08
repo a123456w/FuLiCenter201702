@@ -163,6 +163,7 @@ public class GoodsFragment extends Fragment {
                             dialog.dismiss();
                             Log.i("main",result.length+"");
                         }else {
+
                             if(Adapter==null){
                                 setlistVisibility(false);
                             }

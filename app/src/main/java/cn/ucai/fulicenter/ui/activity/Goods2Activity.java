@@ -111,6 +111,9 @@ public class Goods2Activity extends AppCompatActivity {
         tvCurrencyPrice.setText(data.getCurrencyPrice());
         tvName.setText(data.getGoodsName());
         tvTitle.setText(data.getGoodsName());
-        Log.i("main", "data=" + data.toString());
+       // Log.i("main", "data=" + data.toString());
     }
+
+
+
 }

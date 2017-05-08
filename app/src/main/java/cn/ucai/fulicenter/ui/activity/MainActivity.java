@@ -13,12 +13,14 @@ import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.IDownNewGood;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.ui.fiagment.BoutiqueFragment;
+import cn.ucai.fulicenter.ui.fiagment.CategoryFragment;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
     Fragment[] mFragments;
     GoodsFragment mGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
+    CategoryFragment mCategoryFragment;
     int cIndex,index;
 
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.FrameLayout,mFragments[0])
                 .add(R.id.FrameLayout,mFragments[1])
+                .add(R.id.FrameLayout,mFragments[2])
                 .show(mGoodsFragment)
                 .hide(mBoutiqueFragment)
                 .commit();
@@ -42,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         mFragments=new Fragment[5];
         mGoodsFragment=new GoodsFragment();
         mBoutiqueFragment=new BoutiqueFragment();
+        mCategoryFragment=new CategoryFragment();
         mFragments[0]=mGoodsFragment;
         mFragments[1]=mBoutiqueFragment;
+        mFragments[2]=mCategoryFragment;
     }
 
     public void onCheckedChange(View v){
@@ -53,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tv_Boutique:
                 index=1;
+                break;
+            case R.id.tvCategory:
+                index=2;
                 break;
         }
         setFragment();
