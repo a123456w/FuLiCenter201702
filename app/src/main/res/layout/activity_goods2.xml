@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_below="@id/Layout_Title"
-        android:paddingTop="20dp"
+        android:paddingTop="50dp"
         android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -44,7 +44,8 @@
     </RelativeLayout>
    <cn.ucai.fulicenter.ui.view.AutoFlowIndicator
        android:id="@+id/AutoFlowIndicator"
-       android:layout_width="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_width="300dp"
        android:layout_height="200dp"
        android:layout_below="@id/RelativeLayout"/>
     <cn.ucai.fulicenter.ui.view.FlowIndicator
@@ -59,11 +60,11 @@
         app:r="15dp"
         android:layout_centerHorizontal="true"
         />
-    <TextView
-        android:id="@+id/tvBrief"
+    <WebView
+        android:id="@+id/wvBrief"
         android:text="123213"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_below="@id/FlowIndicator"
         android:layout_centerHorizontal="true"/>
 

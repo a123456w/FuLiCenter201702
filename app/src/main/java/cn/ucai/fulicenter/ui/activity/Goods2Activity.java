@@ -44,8 +44,8 @@ public class Goods2Activity extends AppCompatActivity {
     cn.ucai.fulicenter.ui.view.AutoFlowIndicator AutoFlowIndicator;
     @BindView(R.id.FlowIndicator)
     cn.ucai.fulicenter.ui.view.FlowIndicator FlowIndicator;
-    @BindView(R.id.tvBrief)
-    TextView tvBrief;
+    @BindView(R.id.wvBrief)
+    TextView wvBrief;
 
 
     @Override
@@ -56,8 +56,7 @@ public class Goods2Activity extends AppCompatActivity {
         mode = new DownNewGoodMode();
         mList = new ArrayList();
 
-        mGoodsid = getIntent().getIntExtra(I.Goods.KEY_GOODS_ID, I.CAT_ID);
-
+        mGoodsid = getIntent().getIntExtra(I.Goods.KEY_GOODS_ID, 0);
         DownDetails();
         setListener();
     }
@@ -107,7 +106,7 @@ public class Goods2Activity extends AppCompatActivity {
 
     private void setView(GoodsDetailsBean data) {
         tvEnglishName.setText(data.getGoodsEnglishName());
-        tvBrief.setText(data.getGoodsBrief());
+        wvBrief.setText(data.getGoodsBrief());
         tvCurrencyPrice.setText(data.getCurrencyPrice());
         tvName.setText(data.getGoodsName());
         tvTitle.setText(data.getGoodsName());

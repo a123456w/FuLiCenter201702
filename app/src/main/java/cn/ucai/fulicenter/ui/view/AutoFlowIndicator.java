@@ -114,13 +114,9 @@ public class AutoFlowIndicator extends ViewPager {
             mTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-
-
                         mHandler.sendEmptyMessage(0);
-
-
                 }
-            }, 4000, 3000);
+            }, 4000, 500);
         }
     }
     class MyScroller extends Scroller {
