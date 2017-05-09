@@ -79,7 +79,7 @@ public class Goods2Activity extends AppCompatActivity {
 
     private void DownDetails() {
 
-        mode.DownGoodsDetails(this, mGoodsid, new OnCompleteListener<GoodsDetailsBean>() {
+        mode.DownGoodDetails(this, mGoodsid, new OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean data) {
                 setView(data);

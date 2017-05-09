@@ -17,8 +17,12 @@ import cn.ucai.fulicenter.data.utils.OkHttpUtils;
 public class DownNewGoodMode implements IDownNewGood {
     @Override
     public void DownNewGoodData(Context context, int id, int pageid, int pageSize, OnCompleteListener<NewGoodsBean[]> listener) {
+        String requestURL=I.REQUEST_FIND_NEW_BOUTIQUE_GOODS;
+        if(id>0){
+            requestURL=I.REQUEST_FIND_GOODS_DETAILS;
+        }
         OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
-        utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
+        utils.setRequestUrl(requestURL)
                 .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(id))
                 .addParam(I.PAGE_ID,String.valueOf(pageid))
                 .addParam(I.PAGE_SIZE,String.valueOf(pageSize))
@@ -35,7 +39,7 @@ public class DownNewGoodMode implements IDownNewGood {
     }
 
     @Override
-    public void DownGoodsDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener) {
+    public void DownGoodDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener) {
         OkHttpUtils<GoodsDetailsBean> utils=new  OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
                 .addParam(I.Goods.KEY_GOODS_ID,""+goodsId)
@@ -44,7 +48,7 @@ public class DownNewGoodMode implements IDownNewGood {
     }
 
     @Override
-    public void DownCategoryGorup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener) {
+    public void DownCategoryGorup(Context context, OnCompleteListener<CategoryGroupBean[]> listener) {
         OkHttpUtils<CategoryGroupBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
                 .targetClass(CategoryGroupBean[].class)
@@ -52,7 +56,7 @@ public class DownNewGoodMode implements IDownNewGood {
     }
 
     @Override
-    public void DownCategorychild(Context context, int child, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener) {
+    public void DownCategoryChild(Context context, int child, OnCompleteListener<CategoryChildBean[]> listener) {
         OkHttpUtils<CategoryChildBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
                 .addParam(I.CategoryChild.PARENT_ID,String.valueOf(child))

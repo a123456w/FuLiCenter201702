@@ -100,7 +100,7 @@ public class CategoryFragment extends Fragment {
     }
     int pageId=0;
     private void downChildload(int id, final int index) {
-        mode.DownCategorychild(getContext(),id ,new OnCompleteListener<CategoryChildBean[]>() {
+        mode.DownCategoryChild(getContext(),id ,new OnCompleteListener<CategoryChildBean[]>() {
             @Override
             public void onSuccess(CategoryChildBean[] result) {
                 pageId++;

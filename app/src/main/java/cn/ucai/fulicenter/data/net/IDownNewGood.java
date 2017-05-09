@@ -20,9 +20,13 @@ public interface IDownNewGood {
 
     void DownBoutinue(Context context, OnCompleteListener<BoutiqueBean[]> listener);
 
-    void DownGoodsDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
-    void DownCategoryGorup(Context context, OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener);
-    void DownCategorychild(Context context,int child, OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener);
+    void DownGoodDetails(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
+
+    void DownCategoryGorup(Context context, OnCompleteListener<CategoryGroupBean[]> listener);
+
+    void DownCategoryChild(Context context,int child, OnCompleteListener<CategoryChildBean[]> listener);
+
+
 
 
 }
