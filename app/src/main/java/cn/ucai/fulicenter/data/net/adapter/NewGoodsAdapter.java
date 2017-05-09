@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -73,7 +76,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final NewGoodsBean bean = list.get(position);
         GoodsViewHolder holder= (GoodsViewHolder) holders;
         holder.tvGoodsName.setText(bean.getGoodsName());
-        holder.tvGoodsPrice.setText(bean.getPromotePrice());
+        holder.tvGoodsPrice.setText(bean.getCurrencyPrice());
         holder.GoodsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,4 +142,36 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ButterKnife.bind(this, view);
         }
     }
+
+    public void shortByList(final int shortBy){
+        Collections.sort(list, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean o1, NewGoodsBean o2) {
+                int result=0;
+                switch (shortBy){
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result= (int) (o1.getAddTime()-o2.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result= (int) (o2.getAddTime()-o1.getAddTime());
+                        break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result= parselRes(o1.getCurrencyPrice())-parselRes(o2.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result= parselRes(o2.getCurrencyPrice())-parselRes(o1.getCurrencyPrice());
+                        break;
+                }
+
+                return result;
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    private int parselRes(String price) {
+        return Integer.parseInt(price.substring(price.indexOf("￥") + 1));
+    }
+
+    ;
 }

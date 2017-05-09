@@ -42,6 +42,11 @@
             android:layout_height="wrap_content" />
 
     </RelativeLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
    <cn.ucai.fulicenter.ui.view.AutoFlowIndicator
        android:id="@+id/AutoFlowIndicator"
        android:layout_centerHorizontal="true"

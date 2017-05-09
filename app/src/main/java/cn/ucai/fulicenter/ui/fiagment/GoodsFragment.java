@@ -209,4 +209,9 @@ public class GoodsFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+    public void shorAdapter(int shortBy){
+        if(Adapter!=null){
+            Adapter.shortByList(shortBy);
+        }
+    }
 }

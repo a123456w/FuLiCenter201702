@@ -2,6 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="#fb9003"
+            android:id="@+id/btnCurrencyPrice"
+            android:text="价格"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableRight="@drawable/arrow_order_down"/>
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:background="#fb9003"
+            android:id="@+id/btnAddTime"
+            android:text="上架时间"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/arrow_order_up"/>
+    </LinearLayout>
     <FrameLayout
         android:layout_below="@id/Layout_Title"
         android:id="@+id/BoutiqueFrameLayout"
