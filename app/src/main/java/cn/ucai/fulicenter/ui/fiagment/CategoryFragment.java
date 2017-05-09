@@ -44,7 +44,7 @@ public class CategoryFragment extends Fragment {
     GategoryAdapter adapter;
     Unbinder   unbinder;
     List<CategoryGroupBean> groupList=new ArrayList<>();
-    List<List<CategoryChildBean>> childList=new ArrayList<>();
+    List<ArrayList<CategoryChildBean>> childList=new ArrayList<>();
     @BindView(R.id.elv)
     ExpandableListView elv;
     @BindView(R.id.tvNoMore)

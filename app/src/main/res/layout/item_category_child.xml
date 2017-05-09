@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/RelativeLayoutCategroy"
+    android:id="@+id/RelativeLayoutCategroys"
     android:layout_marginTop="8dp"
     android:paddingTop="5dp"
     android:background="#ccc"

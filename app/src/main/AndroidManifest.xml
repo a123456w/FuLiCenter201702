@@ -19,9 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.BoutiqueActivity" />
+        <activity android:name=".ui.activity.BoutiqueActivity"
+            />
         <activity android:name=".ui.activity.Goods2Activity"/>
-        <activity android:name=".ui.activity.Categroy_Activity" />
+        <activity android:name=".ui.activity.Categroy_Activity"
+            android:launchMode="standard"
+            />
 
         <meta-data
             android:name="com.google.android.gms.version"

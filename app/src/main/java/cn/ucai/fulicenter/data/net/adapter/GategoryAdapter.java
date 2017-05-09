@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,12 +28,12 @@ import cn.ucai.fulicenter.ui.activity.Categroy_Activity;
 
 public class GategoryAdapter extends BaseExpandableListAdapter {
     List<CategoryGroupBean> groupList;
-    List<List<CategoryChildBean>> childList;
+    List<ArrayList<CategoryChildBean>> childList;
     Context context;
 
 
 
-    public GategoryAdapter(List<CategoryGroupBean> groupList, List<List<CategoryChildBean>> childList, Context context) {
+    public GategoryAdapter(List<CategoryGroupBean> groupList, List<ArrayList<CategoryChildBean>> childList, Context context) {
         this.groupList = groupList;
         this.childList = childList;
         this.context = context;
@@ -139,13 +140,13 @@ int pageId;
         ImageView ivCategoryChild;
         @BindView(R.id.tvCategoryChildName)
         TextView tvCategoryChildName;
-        @BindView(R.id.RelativeLayoutCategroy)
+        @BindView(R.id.RelativeLayoutCategroys)
         RelativeLayout RelativeLayoutCategroy;
 
         ChildViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
-        public void bind(int groupPosition, int childPosition) {
+        public void bind(final int groupPosition, int childPosition) {
             final CategoryChildBean bean = getChild(groupPosition, childPosition);
             if(bean!=null){
                 ImageLoader.downloadImg(context,ivCategoryChild,bean.getImageUrl());
@@ -154,7 +155,10 @@ int pageId;
                     @Override
                     public void onClick(View v) {
                         context.startActivity(new Intent(context,Categroy_Activity.class)
-                                .putExtra(I.CategoryChild.CAT_ID,bean.getId()));
+                                .putExtra(I.CategoryChild.CAT_ID,bean.getId())
+                                .putExtra(I.Category.KEY_NAME,groupList.get(groupPosition).getName())
+                                .putExtra(I.CategoryChild.ID,childList.get(groupPosition))
+                        );
                     }
                 });
             }

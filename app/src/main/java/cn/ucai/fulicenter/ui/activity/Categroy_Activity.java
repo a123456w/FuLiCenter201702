@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.CategoryChildBean;
+import cn.ucai.fulicenter.data.net.adapter.CatFilterAdapter;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 import cn.ucai.fulicenter.ui.view.CatItemCategoryButton;
 
@@ -34,17 +39,29 @@ public class Categroy_Activity extends AppCompatActivity {
     @BindView(R.id.CBTiter)
     CatItemCategoryButton CBTiter;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categroy_child);
         bind = ButterKnife.bind(this);
+
         int intExtra = getIntent().getIntExtra(I.CategoryChild.CAT_ID, I.CAT_ID);
+
         Fragment = new GoodsFragment(intExtra);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.BoutiqueFrameLayout, Fragment)
                 .commit();
+
+        String name = getIntent().getStringExtra(I.Category.KEY_NAME);
+
+        ArrayList<CategoryChildBean> list = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.ID);
+        if(name==null||list.size()==0){
+            name="null";
+        }
+        CBTiter.initView(name,list);
     }
 
     @Override
@@ -52,6 +69,9 @@ public class Categroy_Activity extends AppCompatActivity {
         super.onDestroy();
         if (bind != null) {
             bind.unbind();
+        }
+        if(CBTiter!=null){
+            CBTiter.release();
         }
     }
 
