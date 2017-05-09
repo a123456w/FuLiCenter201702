@@ -16,6 +16,7 @@ import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
+import cn.ucai.fulicenter.ui.view.CatItemCategoryButton;
 
 /**
  * Created by Administrator on 2017/5/9 0009.
@@ -30,6 +31,8 @@ public class Categroy_Activity extends AppCompatActivity {
     Button btnCurrencyPrice;
     @BindView(R.id.btnAddTime)
     Button btnAddTime;
+    @BindView(R.id.CBTiter)
+    CatItemCategoryButton CBTiter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,16 +61,19 @@ public class Categroy_Activity extends AppCompatActivity {
             case R.id.btnCurrencyPrice:
                 btnCurrencyPriceAcs = !btnCurrencyPriceAcs;
                 Fragment.shorAdapter(btnCurrencyPriceAcs ? I.SORT_BY_PRICE_ASC : I.SORT_BY_PRICE_DESC);
-                Drawable top = ContextCompat.getDrawable(this, btnCurrencyPriceAcs?R.drawable.arrow_order_up:R.drawable.arrow_order_down);
-                top.setBounds(0,0,top.getMinimumWidth(),top.getMinimumHeight());
-                btnCurrencyPrice.setCompoundDrawables(null,null,top,null);
+
+                Drawable top = ContextCompat.getDrawable(this, btnCurrencyPriceAcs ? R.drawable.arrow_order_up : R.drawable.arrow_order_down);
+                top.setBounds(0, 0, top.getMinimumWidth(), top.getMinimumHeight());
+                // btnCurrencyPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,top,null);
+                btnCurrencyPrice.setCompoundDrawables(null, null, top, null);
                 break;
             case R.id.btnAddTime:
                 btnAddTimeAcs = !btnAddTimeAcs;
                 Fragment.shorAdapter(btnAddTimeAcs ? I.SORT_BY_ADDTIME_ASC : I.SORT_BY_ADDTIME_DESC);
-                Drawable tp = ContextCompat.getDrawable(this, btnAddTimeAcs?R.drawable.arrow_order_up:R.drawable.arrow_order_down);
-                tp.setBounds(0,0,tp.getMinimumWidth(),tp.getMinimumHeight());
-                btnAddTime.setCompoundDrawables(null,null,tp,null);
+                Drawable tp = ContextCompat.getDrawable(this, btnAddTimeAcs ? R.drawable.arrow_order_up : R.drawable.arrow_order_down);
+                tp.setBounds(0, 0, tp.getMinimumWidth(), tp.getMinimumHeight());
+                // btnCurrencyPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,top,null);
+                btnAddTime.setCompoundDrawables(null, null, tp, null);
                 break;
         }
     }

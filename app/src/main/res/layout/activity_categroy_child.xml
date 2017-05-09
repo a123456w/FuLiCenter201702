@@ -2,6 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fb6000">
+        <cn.ucai.fulicenter.ui.view.CatItemCategoryButton
+            android:id="@+id/CBTiter"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="@null"
+
+            android:text="asdfasdf"
+            android:drawableRight="@mipmap/arrow2_up"/>
+    </RelativeLayout>
 
     <LinearLayout
 
