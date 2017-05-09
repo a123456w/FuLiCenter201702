@@ -35,8 +35,6 @@ public class BoutiqueActivity extends AppCompatActivity {
         bind = ButterKnife.bind(this);
         int catid = getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, I.CAT_ID);
         String title = getIntent().getStringExtra(I.Boutique.TITLE);
-        Log.i("main", "tvTitle.title=" + title);
-        Log.i("main", "catid.catid=" + catid);
         tvTitle.setText(title);
         getSupportFragmentManager().beginTransaction().add(R.id.BoutiqueFrameLayout, new GoodsFragment(catid)).commit();
         ivTitle.setOnClickListener(new View.OnClickListener() {

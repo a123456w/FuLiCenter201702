@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.data.net.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CategoryChildBean;
 import cn.ucai.fulicenter.data.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
+import cn.ucai.fulicenter.ui.activity.Categroy_Activity;
 
 /**
  * Created by Administrator on 2017/5/8 0008.
@@ -144,13 +146,17 @@ int pageId;
             ButterKnife.bind(this, view);
         }
         public void bind(int groupPosition, int childPosition) {
-
-
-
-            CategoryChildBean bean = getChild(groupPosition, childPosition);
+            final CategoryChildBean bean = getChild(groupPosition, childPosition);
             if(bean!=null){
                 ImageLoader.downloadImg(context,ivCategoryChild,bean.getImageUrl());
                 tvCategoryChildName.setText(bean.getName());
+                RelativeLayoutCategroy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context,Categroy_Activity.class)
+                                .putExtra(I.CategoryChild.CAT_ID,bean.getId()));
+                    }
+                });
             }
         }
     }
