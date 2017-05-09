@@ -83,8 +83,10 @@ public class CategoryFragment extends Fragment {
                 setlistVisibility(true);
                 if (result != null) {
                     groupList = ResultUtils.array2List(result);
-                    for (CategoryGroupBean bean : groupList) {
-                        downChildload(bean.getId());
+
+                    for (int i=0;i<groupList.size();i++) {
+                        childList.add(new ArrayList<CategoryChildBean>());
+                        downChildload(groupList.get(i).getId(),i);
                     }
                 }
             }
@@ -97,7 +99,7 @@ public class CategoryFragment extends Fragment {
         });
     }
     int pageId=0;
-    private void downChildload(int id) {
+    private void downChildload(int id, final int index) {
         mode.DownCategorychild(getContext(),id ,new OnCompleteListener<CategoryChildBean[]>() {
             @Override
             public void onSuccess(CategoryChildBean[] result) {
@@ -105,7 +107,7 @@ public class CategoryFragment extends Fragment {
                 setlistVisibility(true);
                 if (result != null) {
                     ArrayList<CategoryChildBean> list = ResultUtils.array2List(result);
-                    childList.add(list);
+                    childList.set(index,list);
                 }
                 if(pageId==groupList.size()){
                     dialog.dismiss();

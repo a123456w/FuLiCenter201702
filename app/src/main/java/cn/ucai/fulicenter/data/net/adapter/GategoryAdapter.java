@@ -144,28 +144,10 @@ int pageId;
             ButterKnife.bind(this, view);
         }
         public void bind(int groupPosition, int childPosition) {
-            CategoryGroupBean group = getGroup(groupPosition);
-            int i = groupList.indexOf(group);
-            Log.i("main","i"+i);
-         /*  switch (i){
-               case 3:
-                   i=4;
-                   break;
-               case 4:
-                   i=6;
-                   break;
-               case 5:
-                   i=3;
-                   break;
-               case 6:
-                   i=7;
-                   break;
-               case 7:
-                   i=5;
-                   break;
-           }*/
 
-            CategoryChildBean bean = getChild(i, childPosition);
+
+
+            CategoryChildBean bean = getChild(groupPosition, childPosition);
             if(bean!=null){
                 ImageLoader.downloadImg(context,ivCategoryChild,bean.getImageUrl());
                 tvCategoryChildName.setText(bean.getName());

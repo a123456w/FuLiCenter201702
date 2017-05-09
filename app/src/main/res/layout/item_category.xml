@@ -5,14 +5,13 @@
     android:background="#eee"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="60dp">
     <ImageView
         android:id="@+id/ivCategory"
         android:layout_centerVertical="true"
-        android:paddingLeft="80dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/selector_menu_item_category"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/nopic"/>
     <TextView
         android:id="@+id/tvCategoryName"
         android:layout_centerVertical="true"
