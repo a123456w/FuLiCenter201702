@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.Result;
 import cn.ucai.fulicenter.data.bean.User;
+import cn.ucai.fulicenter.data.local.UserDao;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.IDownUser;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
@@ -31,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     String username;
     String password;
     DownUserMode mode;
+    UserDao userDao=new UserDao(this);
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,19 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
     }
+    private void initDialog() {
+        progressDialog= new ProgressDialog(LoginActivity.this);
+        progressDialog.setMessage(getString(R.string.logining));
+        progressDialog.show();
+    }
+    public void dismissDialog(){
+        if(progressDialog!=null){
+            progressDialog.dismiss();
+        }
 
+    }
     private void login() {
+        initDialog();
         username=etUserName.getText().toString().trim();
         password=etPassword.getText().toString().trim();
         if(checkinput()){
@@ -73,21 +88,23 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    dismissDialog();
                 }
 
                 @Override
                 public void onError(String error) {
-
+                    dismissDialog();
                 }
             });
         }else{
-
+        dismissDialog();
         }
     }
 
     private void LoginSuccess(User user) {
         FuLiCenterApplication.getInstance().setUser(user);
         SharePrefrenceUtils.getInstance().setUserName(user.getMuserName());
+        userDao.saveUser(user);
         finish();
     }
 
@@ -96,14 +113,17 @@ public class LoginActivity extends AppCompatActivity {
             setUserNameMsg(etUserName,R.string.user_name_connot_be_empty);
             return false;
         }
+
         if(!username.matches("[a-zA-Z]\\w{5,15}")){
             setUserNameMsg(etUserName,R.string.illegal_user_name);
             return false;
         }
+
         if(TextUtils.isEmpty(password)){
             setUserNameMsg(etPassword,R.string.password_connot_be_empty);
             return false;
         }
+
         return true;
     }
 
