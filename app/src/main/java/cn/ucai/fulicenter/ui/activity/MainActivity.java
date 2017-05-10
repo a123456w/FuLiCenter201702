@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.IDownNewGood;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.ui.fiagment.BoutiqueFragment;
+import cn.ucai.fulicenter.ui.fiagment.CanterFragment;
 import cn.ucai.fulicenter.ui.fiagment.CategoryFragment;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     GoodsFragment mGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
+    CanterFragment mCanterFragment;
     int cIndex,index;
 
     @Override
@@ -38,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.FrameLayout,mFragments[0])
                 .add(R.id.FrameLayout,mFragments[1])
                 .add(R.id.FrameLayout,mFragments[2])
+                .add(R.id.FrameLayout,mFragments[4])
                 .show(mFragments[0])
                 .hide(mFragments[1])
                 .hide(mFragments[2])
+                .hide(mFragments[4])
                 .commit();
     }
 
@@ -49,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
         mGoodsFragment=new GoodsFragment();
         mBoutiqueFragment=new BoutiqueFragment();
         mCategoryFragment=new CategoryFragment();
+        mCanterFragment = new CanterFragment();
         mFragments[0]=mGoodsFragment;
         mFragments[1]=mBoutiqueFragment;
         mFragments[2]=mCategoryFragment;
+        mFragments[4]=mCanterFragment;
     }
 
     public void onCheckedChange(View v){
@@ -71,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     index=4;
                 }
-
                 break;
         }
         setFragment();
