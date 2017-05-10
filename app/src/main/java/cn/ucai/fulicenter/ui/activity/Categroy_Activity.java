@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -19,7 +19,6 @@ import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CategoryChildBean;
-import cn.ucai.fulicenter.data.net.adapter.CatFilterAdapter;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 import cn.ucai.fulicenter.ui.view.CatItemCategoryButton;
 
@@ -38,6 +37,8 @@ public class Categroy_Activity extends AppCompatActivity {
     Button btnAddTime;
     @BindView(R.id.CBTiter)
     CatItemCategoryButton CBTiter;
+    @BindView(R.id.ivBank)
+    ImageView ivBank;
 
 
     @Override
@@ -56,12 +57,8 @@ public class Categroy_Activity extends AppCompatActivity {
                 .commit();
 
         String name = getIntent().getStringExtra(I.Category.KEY_NAME);
-
         ArrayList<CategoryChildBean> list = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.ID);
-        if(name==null||list.size()==0){
-            name="null";
-        }
-        CBTiter.initView(name,list);
+        CBTiter.initView(name, list);
     }
 
     @Override
@@ -70,12 +67,12 @@ public class Categroy_Activity extends AppCompatActivity {
         if (bind != null) {
             bind.unbind();
         }
-        if(CBTiter!=null){
+        if (CBTiter != null) {
             CBTiter.release();
         }
     }
 
-    @OnClick({R.id.btnCurrencyPrice, R.id.btnAddTime})
+    @OnClick({R.id.btnCurrencyPrice, R.id.btnAddTime,R.id.ivBank})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnCurrencyPrice:
@@ -94,6 +91,9 @@ public class Categroy_Activity extends AppCompatActivity {
                 tp.setBounds(0, 0, tp.getMinimumWidth(), tp.getMinimumHeight());
                 // btnCurrencyPrice.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,top,null);
                 btnAddTime.setCompoundDrawables(null, null, tp, null);
+                break;
+            case R.id.ivBank:
+                finish();
                 break;
         }
     }

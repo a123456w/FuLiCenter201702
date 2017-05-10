@@ -81,17 +81,13 @@ public class CatItemCategoryButton extends Button{
         }
         mPopupWindow.showAsDropDown(this);
     }
-    String names;
     public void initView(String name, ArrayList<CategoryChildBean> list) {
         if(name==null||list==null||list.size()==0){
             CommonUtils.showLongToast("数据下载异常，请重试");
             return;
         }
-        if(!"null".equals(name)){
-            names=name;
-        }
-        this.setText(names);
-        adapter=new CatFilterAdapter(context,list);
+        this.setText(name);
+        adapter=new CatFilterAdapter(context,list,name);
         gv=new GridView(context);
         gv.setNumColumns(GridView.AUTO_FIT);
         gv.setHorizontalSpacing(10);

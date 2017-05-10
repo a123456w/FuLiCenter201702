@@ -29,10 +29,12 @@ import cn.ucai.fulicenter.ui.activity.Goods2Activity;
 public class CatFilterAdapter extends BaseAdapter {
     Context context;
     ArrayList<CategoryChildBean> list;
+    String groupName;
 
-    public CatFilterAdapter(Context context, ArrayList<CategoryChildBean> list) {
+    public CatFilterAdapter(Context context, ArrayList<CategoryChildBean> list,String groupName) {
         this.context = context;
         this.list = list;
+        this.groupName=groupName;
     }
 
     @Override
@@ -85,14 +87,12 @@ public class CatFilterAdapter extends BaseAdapter {
             line1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(
-                            new Intent(context, Categroy_Activity.class)
+                    context.startActivity(new Intent(context,Categroy_Activity.class)
                             .putExtra(I.CategoryChild.CAT_ID,bean.getId())
-                                    .putExtra(I.CategoryChild.ID,list)
-
-
+                            .putExtra(I.Category.KEY_NAME,groupName)
+                            .putExtra(I.CategoryChild.ID,list)
                     );
-
+                    ((Categroy_Activity) context).finish();
                 }
             });
         }
