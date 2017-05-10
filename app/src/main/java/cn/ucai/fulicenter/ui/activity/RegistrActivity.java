@@ -18,6 +18,7 @@ import cn.ucai.fulicenter.data.bean.Result;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
+import cn.ucai.fulicenter.data.utils.MD5;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
 
 /**
@@ -67,7 +68,7 @@ public class RegistrActivity extends AppCompatActivity {
 
         if (checkinput()) {
             Mode = new DownUserMode();
-            Mode.registr(RegistrActivity.this, username, usernick, password,
+            Mode.registr(RegistrActivity.this, username, usernick, MD5.getMessageDigest(password),
                     new OnCompleteListener<String>() {
                 @Override
                 public void onSuccess(String s) {
