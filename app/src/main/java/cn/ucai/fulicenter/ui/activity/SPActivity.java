@@ -21,9 +21,9 @@ import cn.ucai.fulicenter.data.utils.SharePrefrenceUtils;
 public class SPActivity extends AppCompatActivity {
     int time = 5000;
     MyCountTimer timer;
-    @BindView(R.id.tvSplash) TextView tvSplash;
+    @BindView(R.id.tvSplashs) TextView tvSplash;
     Unbinder bind;
-    @OnClick(R.id.tvSplash) void onClick(View v){
+    @OnClick(R.id.tvSplashs) void onClick(View v){
         timer.cancel();
         timer.onFinish();
     }

@@ -26,6 +26,7 @@
             android:launchMode="standard" />
         <activity android:name=".ui.activity.LoginActivity"/>
         <activity android:name=".ui.activity.RegistrActivity"/>
+        <activity android:name=".ui.activity.SetUserActivity"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

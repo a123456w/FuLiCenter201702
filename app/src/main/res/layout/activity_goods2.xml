@@ -5,7 +5,8 @@
     android:id="@+id/activity_goods2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include android:id="@+id/Layout_Title" layout="@layout/common_title"/>
+    <include android:id="@+id/Layout_Title"
+        layout="@layout/common_title"/>
     
     <LinearLayout
         android:id="@+id/LinearLayout"
