@@ -33,4 +33,14 @@ public class DownUserMode implements IDownUser {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    @Override
+    public void updateNick(Context context, String UserName, String NewNick, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
+                .addParam(I.User.USER_NAME,UserName)
+                .addParam(I.User.NICK,NewNick)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

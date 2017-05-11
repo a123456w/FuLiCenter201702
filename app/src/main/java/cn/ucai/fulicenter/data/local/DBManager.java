@@ -44,6 +44,7 @@ public class DBManager {
             if(cursor.moveToNext()){
                 String nick = cursor.getString(cursor.getColumnIndex(DBOpenHelper.USER_COLUMN_NICK));
                 user.setMuserNick(nick);
+                user.setMuserName(username);
             }
         }
 return user;

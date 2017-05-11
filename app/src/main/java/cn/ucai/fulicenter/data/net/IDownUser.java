@@ -12,4 +12,5 @@ import cn.ucai.fulicenter.data.utils.OkHttpUtils;
 public interface IDownUser {
     void Login(Context context, String UserName, String PassWord, OnCompleteListener<String> listener);
     void registr(Context context, String UserName, String Nick, String PassWord, OnCompleteListener<String> listener);
+    void updateNick(Context context, String UserName, String NewNick, OnCompleteListener<String> listener);
 }
