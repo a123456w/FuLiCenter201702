@@ -41,13 +41,15 @@ public class UpNickActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initView();
     }
-    public void initDialog(){
-        pd=new ProgressDialog(UpNickActivity.this);
+
+    public void initDialog() {
+        pd = new ProgressDialog(UpNickActivity.this);
         pd.setMessage(getString(R.string.update_user_nick));
         pd.show();
     }
-    public void dismissDialog(){
-        if(pd!=null){
+
+    public void dismissDialog() {
+        if (pd != null) {
             pd.dismiss();
         }
     }
@@ -65,33 +67,33 @@ public class UpNickActivity extends AppCompatActivity {
     @OnClick(R.id.btnSave)
     public void onViewClicked() {
         initDialog();
-        mode=  new DownUserMode();
+        mode = new DownUserMode();
         String newnick = etSetNick.getText().toString().trim();
-        if(checkinput()){
+        if (checkinput()) {
             mode.updateNick(UpNickActivity.this, user.getMuserName(), newnick, new OnCompleteListener<String>() {
-                         @Override
-                         public void onSuccess(String s) {
-                                if(s!=null){
-                                    Result<User> result = ResultUtils.getResultFromJson(s, User.class);
-                                    Log.i("main", "UpNickActivity.result:" + result.getRetCode());
-                                    if(result!=null){
-                                        if(result.getRetCode()==I.MSG_USER_UPDATE_NICK_FAIL){
-                                            CommonUtils.showLongToast(getString(R.string.update_fail));
-                                        }else{
-                                            updateSuccess(result.getRetData());
-                                            dismissDialog();
-                                        }
-                                    }
-                                }
-                          }
+                @Override
+                public void onSuccess(String s) {
+                    if (s != null) {
+                        Result<User> result = ResultUtils.getResultFromJson(s, User.class);
+                        Log.i("main", "UpNickActivity.result:" + result.getRetCode());
+                        if (result != null) {
+                            if (result.getRetCode() == I.MSG_USER_UPDATE_NICK_FAIL) {
+                                CommonUtils.showLongToast(getString(R.string.update_fail));
+                            } else {
+                                updateSuccess(result.getRetData());
+                                dismissDialog();
+                            }
+                        }
+                    }
+                }
 
-                           @Override
-                          public void onError(String error) {
-                            dismissDialog();
-                          }
+                @Override
+                public void onError(String error) {
+                    dismissDialog();
+                }
             });
-        }else{
-        dismissDialog();
+        } else {
+            dismissDialog();
         }
         finish();
     }
@@ -107,10 +109,15 @@ public class UpNickActivity extends AppCompatActivity {
 
     private boolean checkinput() {
         String newnick = etSetNick.getText().toString().trim();
-        if(newnick.equals(user.getMuserNick())){
+        if (newnick.equals(user.getMuserNick())) {
             CommonUtils.showLongToast(getString(R.string.update_nick_fail_unmodify));
             return false;
         }
         return true;
+    }
+
+    @OnClick(R.id.ivTitle)
+    public void onbankClicked() {
+        finish();
     }
 }
