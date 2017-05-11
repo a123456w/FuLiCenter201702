@@ -36,7 +36,7 @@ public class DBManager {
         return false;
     }
     public synchronized User getUser(String username){
-        User user=null;
+        User user=new User();
         SQLiteDatabase database = sHelper.getReadableDatabase();
         if(database.isOpen()) {
             Cursor cursor = database.rawQuery("select * from " + DBOpenHelper.USER_TABALE_NAME + " where " +

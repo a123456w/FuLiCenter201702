@@ -13,6 +13,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.FuLiCenterApplication;
+import cn.ucai.fulicenter.data.bean.User;
+import cn.ucai.fulicenter.data.local.UserDao;
+import cn.ucai.fulicenter.data.utils.SharePrefrenceUtils;
 
 public class SPActivity extends AppCompatActivity {
     int time = 5000;
@@ -29,6 +33,27 @@ public class SPActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sp);
         bind = ButterKnife.bind(this);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(FuLiCenterApplication.getInstance().getUser()==null){
+                    String userName = SharePrefrenceUtils.getInstance().getUserName();
+                    if(userName!=null){
+                        UserDao userDao = new UserDao(SPActivity.this);
+                        User user= userDao.getUser(userName);
+                        if(user!=null){
+                            FuLiCenterApplication.getInstance().setUser(user);
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
