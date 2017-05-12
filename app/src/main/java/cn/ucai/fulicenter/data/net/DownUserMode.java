@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.utils.OkHttpUtils;
@@ -56,5 +57,44 @@ public class DownUserMode implements IDownUser {
                 .post()
                 .targetClass(String.class)
                 .execute(listener);
+    }
+
+    @Override
+    public void loadCollectsCount(Context context, String username, OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    @Override
+    public void addCollects(Context context, String goodsId, String username, OnCompleteListener<MessageBean> listener) {
+        collectAction(I.ACTION_ADD_COLLECT,context,goodsId,username,listener);
+    }
+
+    private void collectAction(int action, Context context, String goodsId, String username, OnCompleteListener<MessageBean> listener) {
+        String url=I.REQUEST_IS_COLLECT;
+        if(action==I.ACTION_ADD_COLLECT){
+            url=I.REQUEST_ADD_COLLECT;
+        }else if(action==I.ACTION_DELETE_COLLECT){
+            url=I.REQUEST_DELETE_COLLECT;
+        }
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.GOODS_ID,goodsId)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    @Override
+    public void removeCollects(Context context, String goodsId, String userneame, OnCompleteListener<MessageBean> listener) {
+        collectAction(I.ACTION_DELETE_COLLECT,context,goodsId,userneame,listener);
+    }
+
+    @Override
+    public void isCollects(Context context, String goodsId, String userneame, OnCompleteListener<MessageBean> listener) {
+        collectAction(I.ACTION_ISCOLLECT,context,goodsId,userneame,listener);
     }
 }

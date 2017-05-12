@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 
+import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.utils.OkHttpUtils;
 
@@ -16,4 +17,9 @@ public interface IDownUser {
     void registr(Context context, String UserName, String Nick, String PassWord, OnCompleteListener<String> listener);
     void updateNick(Context context, String UserName, String NewNick, OnCompleteListener<String> listener);
     void uploadAvatar(Context context, String username, String avatar_type, File file, OnCompleteListener<String> listener);
+    void loadCollectsCount(Context context, String username, OnCompleteListener<MessageBean> listener);
+    void addCollects(Context context, String goodsId, String userneame , OnCompleteListener<MessageBean> listener);
+    void removeCollects(Context context, String goodsId, String userneame , OnCompleteListener<MessageBean> listener);
+    void isCollects(Context context, String goodsId, String username , OnCompleteListener<MessageBean> listener);
+
 }
