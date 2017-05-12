@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/right_arrow_icon"/>
-        <ImageView
+        <cn.ucai.fulicenter.ui.utils.view.CircleImageView
             android:id="@+id/ivUserAvatars"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
