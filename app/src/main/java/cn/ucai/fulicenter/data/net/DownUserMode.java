@@ -81,7 +81,7 @@ public class DownUserMode implements IDownUser {
             url=I.REQUEST_DELETE_COLLECT;
         }
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
-        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+        utils.setRequestUrl(url)
                 .addParam(I.Collect.GOODS_ID,goodsId)
                 .addParam(I.Collect.USER_NAME,username)
                 .targetClass(MessageBean.class)

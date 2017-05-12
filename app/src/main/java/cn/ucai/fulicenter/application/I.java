@@ -335,6 +335,7 @@ public interface I {
     int MSG_LOCATION_UPLOAD_FAIL=502;//用户上传地理位置失败
     int MSG_LOCATION_UPDATE_SUCCESS=503;//用户更新地理位置成功
     int MSG_LOCATION_UPDATE_FAIL=504;//用户更新地理位置失败
+
     int MSG_UNKNOW=999;//未知错误
     int MSG_ILLEGAL_REQUEST=-1;    //非法请求
 
