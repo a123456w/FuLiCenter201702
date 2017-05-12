@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class SPActivity extends AppCompatActivity {
                     if(userName!=null){
                         UserDao userDao = new UserDao(SPActivity.this);
                         User user= userDao.getUser(userName);
+                        Log.i("main", "SPActivity.user:" + user);
                         if(user!=null){
                             FuLiCenterApplication.getInstance().setUser(user);
                         }

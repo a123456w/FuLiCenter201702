@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.ui.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,7 +29,9 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -38,8 +42,15 @@ import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.Result;
 import cn.ucai.fulicenter.data.bean.User;
+import cn.ucai.fulicenter.data.local.UserDao;
+import cn.ucai.fulicenter.data.net.DownUserMode;
+import cn.ucai.fulicenter.data.net.OnCompleteListener;
+import cn.ucai.fulicenter.data.utils.CommonUtils;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
+import cn.ucai.fulicenter.data.utils.L;
+import cn.ucai.fulicenter.data.utils.ResultUtils;
 import cn.ucai.fulicenter.data.utils.SharePrefrenceUtils;
 import cn.ucai.fulicenter.ui.utils.ClipImageActivity;
 import cn.ucai.fulicenter.ui.utils.view.CircleImageView;
@@ -58,6 +69,7 @@ public class SetUserActivity extends AppCompatActivity {
 
     @BindView(R.id.tvTitle)
     TextView tvTitle;
+
 
 
 
@@ -146,12 +158,101 @@ public class SetUserActivity extends AppCompatActivity {
 
 
                     //此处后面可以将bitMap转为二进制上传后台网络
-                    //......
+                    File file = saveBitmapFile(bitmap);
+                    uploadAvatar(file);
 
                 }
                 break;
         }
     }
+
+    DownUserMode mode;
+
+    private void uploadAvatar(File file) {
+        mode = new DownUserMode();
+        showDialog();
+        final User user = FuLiCenterApplication.getInstance().getUser();
+        Log.i("main", "SetUserActivity.user:" + user);
+        mode.uploadAvatar(SetUserActivity.this, user.getMuserName(), null, file,
+                new OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        if(s!=null){
+                            Result<User> result = ResultUtils.getResultFromJson(s, User.class);
+                            Log.i("main","result:"+result);
+                            if(result!=null){
+                                if(result.getRetCode()==I.MSG_UPLOAD_AVATAR_FAIL){
+                                    CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+                                    ivAvatars.setImageResource(R.drawable.icon_account);
+                                }else{
+                                    updateSuccess(result.getRetData());
+                                    dismissDialog();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        dismissDialog();
+                    }
+                });
+        dismissDialog();
+    }
+
+    private void updateSuccess(User user) {
+        Log.i("main", "SetUserActivity.user:" + user);
+        FuLiCenterApplication.getInstance().setUser(user);
+        UserDao userDao = new UserDao(SetUserActivity.this);
+        userDao.saveUser(user);
+    }
+    ProgressDialog pd;
+    public void showDialog(){
+        pd=new ProgressDialog(SetUserActivity.this);
+        pd.setMessage(getString(R.string.update_user_avatar));
+        pd.show();
+    }
+    public void dismissDialog(){
+        if(pd!=null&&pd.isShowing()){
+            pd.dismiss();
+        }
+    }
+
+    /**
+     * 返回头像保存在sd卡的位置:
+     * Android/data/cn.ucai.superwechat/files/pictures/user_avatar
+     * @param context
+     * @param path
+     * @return
+     */
+    public static String getAvatarPath(Context context, String path){
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File folder = new File(dir,path);
+        if(!folder.exists()){
+            folder.mkdir();
+        }
+        return folder.getAbsolutePath();
+    }
+
+    private File saveBitmapFile(Bitmap bitmap) {
+        if (bitmap != null) {
+            String imagePath = getAvatarPath(SetUserActivity.this, I.AVATAR_TYPE) + "/" + getAvatarName() + ".jpg";
+            File file = new File(imagePath);//将要保存图片的路径
+            L.e("file path=" + file.getAbsolutePath());
+            try {
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return file;
+        }
+        return null;
+    }
+
+
 
     @OnClick(R.id.ivTitle)
     public void onbankClicked() {
@@ -177,6 +278,10 @@ public class SetUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.ivUserAvatars)
     public void onUpdateAvatars() {
+        upavatar();
+    }
+
+    private void upavatar() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_popupwindow, null);
         TextView btnCarema = (TextView) view.findViewById(R.id.btn_camera);
         TextView btnPhoto = (TextView) view.findViewById(R.id.btn_photo);
@@ -236,8 +341,8 @@ public class SetUserActivity extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-
     }
+
     /**
      * 跳转到照相机
      */
@@ -350,6 +455,11 @@ public class SetUserActivity extends AppCompatActivity {
             }
         }
         return data;
+    }
+    String avatarName;
+    public String getAvatarName() {
+        avatarName=String.valueOf(System.currentTimeMillis());
+        return avatarName;
     }
 
 

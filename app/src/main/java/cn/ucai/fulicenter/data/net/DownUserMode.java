@@ -2,6 +2,8 @@ package cn.ucai.fulicenter.data.net;
 
 import android.content.Context;
 
+import java.io.File;
+
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
@@ -40,6 +42,18 @@ public class DownUserMode implements IDownUser {
         utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
                 .addParam(I.User.USER_NAME,UserName)
                 .addParam(I.User.NICK,NewNick)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    @Override
+    public void uploadAvatar(Context context, String username, String avatar_type, File file, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_AVATAR)
+                .addParam(I.NAME_OR_HXID,username)
+                .addParam(I.AVATAR_TYPE,I.AVATAR_TYPE_USER_PATH)
+                .addFile2(file)
+                .post()
                 .targetClass(String.class)
                 .execute(listener);
     }

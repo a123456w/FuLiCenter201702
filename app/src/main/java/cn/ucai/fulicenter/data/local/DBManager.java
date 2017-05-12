@@ -30,7 +30,11 @@ public class DBManager {
             ContentValues values = new ContentValues();
             values.put(DBOpenHelper.USER_COLUMN_NAME,user.getMuserName());
             values.put(DBOpenHelper.USER_COLUMN_NICK,user.getMuserNick());
-            long insert = database.insert(DBOpenHelper.USER_TABALE_NAME, null, values);
+            values.put(DBOpenHelper.USER_COLUMN_AVATAR_PATH,user.getMavatarPath());
+            values.put(DBOpenHelper.USER_COLUMN_AVATAR_SUFFIX,user.getMavatarSuffix());
+            values.put(DBOpenHelper.USER_COLUMN_AVATAR_UPDATE_TIME,user.getMavatarLastUpdateTime());
+
+            long insert = database.replace(DBOpenHelper.USER_TABALE_NAME, null, values);
             return insert>0?true:false;
         }
         return false;
@@ -43,11 +47,18 @@ public class DBManager {
                     DBOpenHelper.USER_COLUMN_NAME + "=?", new String[]{username});
             if(cursor.moveToNext()){
                 String nick = cursor.getString(cursor.getColumnIndex(DBOpenHelper.USER_COLUMN_NICK));
-                user.setMuserNick(nick);
+                String mavatarLastUpdateTime = cursor.getString(cursor.getColumnIndex(DBOpenHelper.USER_COLUMN_AVATAR_UPDATE_TIME));
+                String path = cursor.getString(cursor.getColumnIndex(DBOpenHelper.USER_COLUMN_AVATAR_PATH));
+                String suffix = cursor.getString(cursor.getColumnIndex(DBOpenHelper.USER_COLUMN_AVATAR_SUFFIX));
+
                 user.setMuserName(username);
+                user.setMuserNick(nick);
+                user.setMavatarSuffix(suffix);
+                user.setMavatarPath(path);
+                user.setMavatarLastUpdateTime(mavatarLastUpdateTime);
             }
         }
-return user;
+        return user;
     }
 
 

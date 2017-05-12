@@ -23,13 +23,12 @@
             android:id="@+id/tv"
             android:layout_width="20dp"
             android:layout_height="match_parent" />
-        <ImageView
+        <cn.ucai.fulicenter.ui.utils.view.CircleImageView
             android:id="@+id/ivAvatares"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_toRightOf="@id/tv"
-            android:layout_centerVertical="true"
-            android:src="@drawable/selector_menu_item_personal_center"/>
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tv1"
             android:layout_toRightOf="@id/ivAvatares"
