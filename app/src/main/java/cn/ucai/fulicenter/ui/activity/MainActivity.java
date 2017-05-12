@@ -117,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
     private void setFragment() {
         if (index != cIndex) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.hide(mFragments[cIndex]);
+            if (cIndex == 4) {
+                ft.remove(mFragments[cIndex]);
+            } else {
+                ft.hide(mFragments[cIndex]);
+            }
             if (!mFragments[index].isAdded()) {
                 ft.add(R.id.FrameLayout, mFragments[index]);
             }

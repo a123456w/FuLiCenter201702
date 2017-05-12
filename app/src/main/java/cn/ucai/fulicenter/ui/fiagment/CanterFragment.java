@@ -17,8 +17,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
-import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.User;
+import cn.ucai.fulicenter.data.net.DownUserMode;
+import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
 import cn.ucai.fulicenter.ui.activity.SetUserActivity;
 
@@ -34,12 +36,17 @@ public class CanterFragment extends Fragment {
     TextView tvNick;
     Unbinder unbinder;
     User user;
+    @BindView(R.id.tvCount)
+    TextView tvCount;
+    DownUserMode mode;
+    int collectCount=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_canter, null);
         unbinder = ButterKnife.bind(this, view);
+        mode=new DownUserMode();
         return view;
     }
 
@@ -52,11 +59,35 @@ public class CanterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        tvCount.setText(String.valueOf(collectCount));
         user = FuLiCenterApplication.getInstance().getUser();
         if (user != null) {
             tvNick.setText(user.getMuserNick());
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), getContext(), ivAvatares);
+            initCollectCount();
         }
+
+
+    }
+
+    private void initCollectCount() {
+        mode.loadCollectsCount(getContext(), user.getMuserName(), new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null&&result.isSuccess()){
+                    collectCount=Integer.parseInt(result.getMsg());
+                }else{
+                    collectCount=0;
+                }
+                tvCount.setText(String.valueOf(collectCount));
+            }
+
+            @Override
+            public void onError(String error) {
+                collectCount=0;
+                tvCount.setText(String.valueOf(collectCount));
+            }
+        });
     }
 
     @Override
@@ -67,6 +98,11 @@ public class CanterFragment extends Fragment {
 
     @OnClick({R.id.tvSetCenter, R.id.ivAvatares, R.id.tvNick})
     public void onViewClicked(View view) {
-     startActivity(new Intent(getContext(),SetUserActivity.class));
+        startActivity(new Intent(getContext(), SetUserActivity.class));
+    }
+
+    @OnClick(R.id.rlCollectCount)
+    public void onCollectCountClick(View v) {
+
     }
 }
