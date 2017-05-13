@@ -33,6 +33,7 @@
         <activity android:name=".ui.activity.SetUserActivity"/>
         <activity android:name=".ui.activity.UpNickActivity"/>
         <activity android:name=".ui.utils.ClipImageActivity"/>
+        <activity android:name=".ui.activity.CollectActivity"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

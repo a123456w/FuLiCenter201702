@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.io.File;
 
+import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.MessageBean;
+import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.utils.OkHttpUtils;
 
@@ -21,5 +23,6 @@ public interface IDownUser {
     void addCollects(Context context, String goodsId, String userneame , OnCompleteListener<MessageBean> listener);
     void removeCollects(Context context, String goodsId, String userneame , OnCompleteListener<MessageBean> listener);
     void isCollects(Context context, String goodsId, String username , OnCompleteListener<MessageBean> listener);
+    void findCollects(Context context, String username , String pageid, String pagesize,OnCompleteListener<CollectBean[]> listener);
 
 }

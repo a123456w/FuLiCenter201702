@@ -22,6 +22,7 @@ import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
+import cn.ucai.fulicenter.ui.activity.CollectActivity;
 import cn.ucai.fulicenter.ui.activity.SetUserActivity;
 
 
@@ -39,14 +40,14 @@ public class CanterFragment extends Fragment {
     @BindView(R.id.tvCount)
     TextView tvCount;
     DownUserMode mode;
-    int collectCount=0;
+    int collectCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_canter, null);
         unbinder = ButterKnife.bind(this, view);
-        mode=new DownUserMode();
+        mode = new DownUserMode();
         return view;
     }
 
@@ -74,17 +75,17 @@ public class CanterFragment extends Fragment {
         mode.loadCollectsCount(getContext(), user.getMuserName(), new OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
-                if(result!=null&&result.isSuccess()){
-                    collectCount=Integer.parseInt(result.getMsg());
-                }else{
-                    collectCount=0;
+                if (result != null && result.isSuccess()) {
+                    collectCount = Integer.parseInt(result.getMsg());
+                } else {
+                    collectCount = 0;
                 }
                 tvCount.setText(String.valueOf(collectCount));
             }
 
             @Override
             public void onError(String error) {
-                collectCount=0;
+                collectCount = 0;
                 tvCount.setText(String.valueOf(collectCount));
             }
         });
@@ -103,6 +104,7 @@ public class CanterFragment extends Fragment {
 
     @OnClick(R.id.rlCollectCount)
     public void onCollectCountClick(View v) {
+        startActivity(new Intent(getContext(),CollectActivity.class));
 
     }
 }

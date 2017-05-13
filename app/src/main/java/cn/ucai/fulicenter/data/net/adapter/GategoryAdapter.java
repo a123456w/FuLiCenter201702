@@ -77,7 +77,6 @@ public class GategoryAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return false;
     }
-int pageId;
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         CategoryViewHolder holder;

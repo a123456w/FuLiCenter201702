@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
@@ -96,5 +97,16 @@ public class DownUserMode implements IDownUser {
     @Override
     public void isCollects(Context context, String goodsId, String userneame, OnCompleteListener<MessageBean> listener) {
         collectAction(I.ACTION_ISCOLLECT,context,goodsId,userneame,listener);
+    }
+
+    @Override
+    public void findCollects(Context context,String username, String pageid, String pagesize, OnCompleteListener<CollectBean[]> listener) {
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.PAGE_ID,pageid)
+                .addParam(I.PAGE_SIZE,pagesize)
+                .targetClass(CollectBean[].class)
+                .execute(listener);
     }
 }
