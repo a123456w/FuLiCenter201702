@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
+import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
@@ -94,6 +95,15 @@ public class CollectActivity extends AppCompatActivity {
 
     private void initView() {
         gm = new GridLayoutManager(CollectActivity.this, 2);
+        gm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(mAdapter==null||position==mAdapter.getItemCount()-1){
+                    return I.COLUM_NUM;
+                }
+                return 1;
+            }
+        });
         rvCollect.setLayoutManager(gm);
     }
 

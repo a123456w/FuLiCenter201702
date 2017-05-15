@@ -14,20 +14,30 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.application.FuLiCenterApplication;
+import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CollectBean;
+import cn.ucai.fulicenter.data.bean.MessageBean;
+import cn.ucai.fulicenter.data.bean.User;
+import cn.ucai.fulicenter.data.net.DownUserMode;
+import cn.ucai.fulicenter.data.net.OnCompleteListener;
+import cn.ucai.fulicenter.data.utils.CommonUtils;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
+import cn.ucai.fulicenter.data.utils.ResultUtils;
 
 /**
  * Created by Administrator on 2017/5/13 0013.
  */
 
 public class CollectAdapter extends RecyclerView.Adapter {
+    DownUserMode mode = new DownUserMode();
+    User user = FuLiCenterApplication.getInstance().getUser();
     static final int TYPE_FOOTER = 0;
     static final int TYPE_ITEM = 1;
     Context context;
     List<CollectBean> list;
 
-    boolean isCancel=false;
+    boolean isCancel = false;
 
     public void setCancel(boolean cancel) {
         isCancel = cancel;
@@ -76,27 +86,42 @@ public class CollectAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holders, int position) {
-        if(getItemViewType(position)==TYPE_FOOTER){
-            FooterViewHolder holder= (FooterViewHolder) holders;
+    public void onBindViewHolder(final RecyclerView.ViewHolder holders, final int position) {
+        if (getItemViewType(position) == TYPE_FOOTER) {
+            FooterViewHolder holder = (FooterViewHolder) holders;
             holder.tvFooter.setText(footertext);
             holder.tvFooter.setVisibility(View.VISIBLE);
+
             return;
         }
-        final CollectViewHolder holder= (CollectViewHolder) holders;
-        CollectBean bean = list.get(position);
+        final CollectViewHolder holder = (CollectViewHolder) holders;
+        final CollectBean bean = list.get(position);
         holder.tvGoodsName.setText(bean.getGoodsName());
         ImageLoader.downloadImg(context, holder.ivGoodsThumb, bean.getGoodsImg());
         holder.ivRemoveCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 删除收藏
+                mode.removeCollects(context, String.valueOf(bean.getGoodsId()), user.getMuserName()
+                        , new OnCompleteListener<MessageBean>() {
+                            @Override
+                            public void onSuccess(MessageBean result) {
+                                if (result != null && result.isSuccess()) {
+                                    updateUi(position, holder);
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                CommonUtils.showLongToast(error);
+                            }
+                        });
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-               holder.ivRemoveCart.setVisibility(View.VISIBLE);
+                holder.ivRemoveCart.setVisibility(View.VISIBLE);
                 return true;
             }
         });
@@ -109,14 +134,21 @@ public class CollectAdapter extends RecyclerView.Adapter {
 
     }
 
+    private void updateUi(int position, CollectViewHolder holder) {
+        list.remove(position);
+        notifyDataSetChanged();
+        holder.ivRemoveCart.setVisibility(View.GONE);
+        CommonUtils.showLongToast(I.DELETE_COLLECT);
+    }
+
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position==getItemCount()-1){
+        if (position == getItemCount() - 1) {
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
@@ -135,8 +167,8 @@ public class CollectAdapter extends RecyclerView.Adapter {
         ImageView ivGoodsThumb;
         @BindView(R.id.tvGoodsName)
         TextView tvGoodsName;
-        @BindView(R.id.GoodsLinearLayout)
-        LinearLayout GoodsLinearLayout;
+        @BindView(R.id.CollectLinearLayout)
+        LinearLayout CollectLinearLayout;
 
         CollectViewHolder(View view) {
             super(view);
@@ -146,7 +178,7 @@ public class CollectAdapter extends RecyclerView.Adapter {
 
     }
 
-    class FooterViewHolder extends RecyclerView.ViewHolder{
+    class FooterViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvFooter)
         TextView tvFooter;
 

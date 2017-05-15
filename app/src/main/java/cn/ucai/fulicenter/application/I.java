@@ -62,6 +62,7 @@ public interface I {
     int ACTION_CART_ADD = 1;
     int ACTION_CART_DEL = 2;
     int ACTION_CART_UPDATA = 3;
+    String DELETE_COLLECT = "删除收藏成功";
 
     interface Goods {
         String KEY_RESULT = "result";
