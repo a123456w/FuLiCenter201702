@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.utils.L;
 import cn.ucai.fulicenter.ui.fiagment.BoutiqueFragment;
 import cn.ucai.fulicenter.ui.fiagment.CanterFragment;
+import cn.ucai.fulicenter.ui.fiagment.CartFragment;
 import cn.ucai.fulicenter.ui.fiagment.CategoryFragment;
 import cn.ucai.fulicenter.ui.fiagment.GoodsFragment;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
     CanterFragment mCanterFragment;
+    CartFragment mCartFragment;
     int cIndex, index;
     @BindView(R.id.tv_New_Good)
     RadioButton tvNewGood;
@@ -75,9 +77,12 @@ public class MainActivity extends AppCompatActivity {
         mBoutiqueFragment = new BoutiqueFragment();
         mCategoryFragment = new CategoryFragment();
         mCanterFragment = new CanterFragment();
+        mCartFragment=new CartFragment();;
         mFragments[0] = mGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2] = mCategoryFragment;
+
+        mFragments[3]=mCartFragment;
         mFragments[4] = mCanterFragment;
     }
 

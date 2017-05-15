@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 
+import cn.ucai.fulicenter.data.bean.CartBean;
 import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
@@ -27,6 +28,6 @@ public interface IDownUser {
     void addCart(Context context, int goodsId, String username, int count,boolean isChecked, OnCompleteListener<MessageBean> listener);
     void removeCart(Context context, int cartId, OnCompleteListener<MessageBean> listener);
     void updateCart(Context context, int cartId, int count, boolean isChecked, OnCompleteListener<MessageBean> listener);
-    void loadCart(Context context, String username, OnCompleteListener<MessageBean> listener);
+    void loadCart(Context context, String username, OnCompleteListener<CartBean[]> listener);
 
 }

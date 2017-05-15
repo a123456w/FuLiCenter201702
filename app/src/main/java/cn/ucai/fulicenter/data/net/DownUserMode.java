@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 import cn.ucai.fulicenter.application.I;
+import cn.ucai.fulicenter.data.bean.CartBean;
 import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.NewGoodsBean;
@@ -143,11 +144,11 @@ public class DownUserMode implements IDownUser {
     }
 
     @Override
-    public void loadCart(Context context, String username, OnCompleteListener<MessageBean> listener) {
-        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+    public void loadCart(Context context, String username, OnCompleteListener<CartBean[]> listener) {
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CARTS)
                 .addParam(I.User.USER_NAME,username)
-                .targetClass(MessageBean.class)
+                .targetClass(CartBean[].class)
                 .execute(listener);
     }
 }
