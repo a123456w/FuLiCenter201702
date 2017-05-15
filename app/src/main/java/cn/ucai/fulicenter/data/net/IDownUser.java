@@ -24,5 +24,9 @@ public interface IDownUser {
     void removeCollects(Context context, String goodsId, String userneame , OnCompleteListener<MessageBean> listener);
     void isCollects(Context context, String goodsId, String username , OnCompleteListener<MessageBean> listener);
     void findCollects(Context context, String username , String pageid, String pagesize,OnCompleteListener<CollectBean[]> listener);
+    void addCart(Context context, int goodsId, String username, int count,boolean isChecked, OnCompleteListener<MessageBean> listener);
+    void removeCart(Context context, int cartId, OnCompleteListener<MessageBean> listener);
+    void updateCart(Context context, int cartId, int count, boolean isChecked, OnCompleteListener<MessageBean> listener);
+    void loadCart(Context context, String username, OnCompleteListener<MessageBean> listener);
 
 }

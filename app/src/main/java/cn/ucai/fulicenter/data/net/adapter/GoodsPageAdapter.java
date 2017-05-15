@@ -50,4 +50,6 @@ public class GoodsPageAdapter extends PagerAdapter {
         ImageView ivGoods= (ImageView) object;
         container.removeView(ivGoods);
     }
+
+
 }

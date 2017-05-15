@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.data.net.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,15 @@ import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CollectBean;
 import cn.ucai.fulicenter.data.bean.MessageBean;
+import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.utils.CommonUtils;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
+import cn.ucai.fulicenter.ui.activity.CollectActivity;
+import cn.ucai.fulicenter.ui.activity.Goods2Activity;
 
 /**
  * Created by Administrator on 2017/5/13 0013.
@@ -44,9 +48,6 @@ public class CollectAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public boolean isCancel() {
-        return isCancel;
-    }
 
     String footertext;
 
@@ -58,10 +59,7 @@ public class CollectAdapter extends RecyclerView.Adapter {
 
     public void setMore(boolean more) {
         isMore = more;
-    }
-
-    public String getFootertext() {
-        return footertext;
+        notifyDataSetChanged();
     }
 
     public void setFootertext(String footertext) {
@@ -98,6 +96,8 @@ public class CollectAdapter extends RecyclerView.Adapter {
         final CollectBean bean = list.get(position);
         holder.tvGoodsName.setText(bean.getGoodsName());
         ImageLoader.downloadImg(context, holder.ivGoodsThumb, bean.getGoodsImg());
+
+
         holder.ivRemoveCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +128,17 @@ public class CollectAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.ivRemoveCart.setVisibility(View.GONE);
+                if(holder.ivRemoveCart.getVisibility()==View.VISIBLE){
+                    holder.ivRemoveCart.setVisibility(View.GONE);
+                    return;
+                }
+                ((CollectActivity)context).startActivityForResult(
+                        new Intent(context, Goods2Activity.class)
+                        .putExtra(I.Goods.KEY_GOODS_ID,bean.getGoodsId())
+                        ,I.REQUEST_CODE_GO_DELETE);
             }
         });
+
 
     }
 
@@ -159,6 +167,11 @@ public class CollectAdapter extends RecyclerView.Adapter {
         this.list.addAll(list);
         notifyDataSetChanged();
     }
+    public void addDate(ArrayList<CollectBean> list) {
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     class CollectViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivRemoveCart)
@@ -181,7 +194,6 @@ public class CollectAdapter extends RecyclerView.Adapter {
     class FooterViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tvFooter)
         TextView tvFooter;
-
         FooterViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

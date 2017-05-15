@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,6 +28,7 @@ import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
+import cn.ucai.fulicenter.data.net.adapter.CollectAdapter;
 import cn.ucai.fulicenter.data.net.adapter.GoodsPageAdapter;
 import cn.ucai.fulicenter.data.utils.CommonUtils;
 import cn.ucai.fulicenter.ui.view.AutoFlowIndicator;
@@ -59,7 +61,6 @@ public class Goods2Activity extends AppCompatActivity {
     ImageView ivCollect;
     boolean isCollect;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class Goods2Activity extends AppCompatActivity {
         mList = new ArrayList();
 
         mGoodsid = getIntent().getIntExtra(I.Goods.KEY_GOODS_ID, 0);
+        Log.i("main", "Goods2Activity.mGoodsid:" + mGoodsid);
         DownDetails();
         setListener();
     }
@@ -88,6 +90,10 @@ public class Goods2Activity extends AppCompatActivity {
         ivTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_OK,new Intent()
+                        .putExtra(I.Goods.KEY_GOODS_ID,mGoodsid)
+                        .putExtra(I.Goods.KEY_IS_COLLECT,isCollect)
+                );
                 finish();
             }
         });
@@ -97,8 +103,10 @@ public class Goods2Activity extends AppCompatActivity {
         mode.DownGoodDetails(this, mGoodsid, new OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean data) {
-                setView(data);
-                setImg(data);
+                if (data != null) {
+                    setView(data);
+                    setImg(data);
+                }
             }
 
             @Override
@@ -226,5 +234,10 @@ public class Goods2Activity extends AppCompatActivity {
         if(requestCode==0&&resultCode==RESULT_OK){
             loadCollect();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

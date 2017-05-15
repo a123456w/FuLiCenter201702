@@ -22,6 +22,7 @@ public interface I {
     int REQUEST_CODE_LOGIN = 102;
     int REQUEST_CODE_NICK = 103;
     int REQUEST_CODE_LOGIN_FROM_CART = 104;
+    int REQUEST_CODE_GO_DELETE = 105;
 
     /** BeeColud APP ID */
     String BEE_COLUD_APP_ID = "3539b590-4859-4128-87a3-5fb8b86b94f6";
@@ -64,6 +65,8 @@ public interface I {
     int ACTION_CART_UPDATA = 3;
     String DELETE_COLLECT = "删除收藏成功";
 
+
+
     interface Goods {
         String KEY_RESULT = "result";
         String RESPONSE_SUCCESS = "success";
@@ -73,6 +76,7 @@ public interface I {
         String KEY_GOODS_ID = "goods_id";
         String KEY_GOODS_NAME = "goods_name";
         String KEY_ENGLISH_NAME = "english_name";
+        String KEY_IS_COLLECT="isCollect";
 
         String HINT_DOWNLOAD_TITLE = "加载商品信息";
         String HINT_DOWNLOADING = "加载中...";

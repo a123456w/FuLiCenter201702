@@ -104,6 +104,10 @@ public class CanterFragment extends Fragment {
 
     @OnClick(R.id.rlCollectCount)
     public void onCollectCountClick(View v) {
+        user=FuLiCenterApplication.getInstance().getUser();
+        if(user==null){
+            return;
+        }
         startActivity(new Intent(getContext(),CollectActivity.class));
 
     }
