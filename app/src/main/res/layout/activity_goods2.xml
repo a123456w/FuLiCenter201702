@@ -19,6 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/bg_collect_in"/>
+        <ImageView
+            android:id="@+id/ivAddCart"
+            android:paddingRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ivCollect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/bg_cart_selected"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -58,16 +66,9 @@
     </RelativeLayout>
 
 
-
-   <cn.ucai.fulicenter.ui.view.AutoFlowIndicator
-       android:id="@+id/AutoFlowIndicator"
-       android:layout_centerHorizontal="true"
-       android:layout_width="300dp"
-       android:layout_height="200dp"
-       android:layout_below="@id/RelativeLayout"/>
     <cn.ucai.fulicenter.ui.view.FlowIndicator
         android:id="@+id/FlowIndicator"
-        android:layout_below="@id/AutoFlowIndicator"
+        android:layout_below="@+id/AutoFlowIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:focus="0"
@@ -85,10 +86,15 @@
     android:layout_below="@id/FlowIndicator"
     android:layout_centerHorizontal="true"/>
 
-
-
-
-
+    <cn.ucai.fulicenter.ui.view.AutoFlowIndicator
+        android:id="@+id/AutoFlowIndicator"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/RelativeLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
 
 
 </RelativeLayout>

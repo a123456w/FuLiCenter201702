@@ -12,6 +12,19 @@ public class FuLiCenterApplication extends Application {
     private static FuLiCenterApplication instance;
 
     private static User user=null;
+    private boolean isLogined=false;
+
+    public static void setInstance(FuLiCenterApplication instance) {
+        FuLiCenterApplication.instance = instance;
+    }
+
+    public boolean isLogined() {
+        return isLogined;
+    }
+
+    public void setLogined(boolean logined) {
+        isLogined = logined;
+    }
 
     public static User getUser() {
         return user;
@@ -19,6 +32,7 @@ public class FuLiCenterApplication extends Application {
 
     public void setUser(User user) {
         this.user = user;
+        setLogined(user==null?false:true);
     }
 
     @Override

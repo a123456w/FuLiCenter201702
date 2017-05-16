@@ -42,7 +42,7 @@
         android:textSize="20dp"
         android:layout_alignParentBottom="true"
         android:paddingBottom="20dp"
-        android:layout_toRightOf="@id/tvNumber"/>
+        android:layout_toRightOf="@+id/tvNumber"/>
     <TextView
         android:id="@+id/tvNumber"
         android:text="100"
@@ -61,7 +61,7 @@
         android:textSize="20dp"
         android:layout_alignParentBottom="true"
         android:paddingBottom="20dp"
-        android:layout_toRightOf="@id/ivAddCart"/>
+        android:layout_toRightOf="@+id/ivAddCart"/>
     <ImageView
         android:id="@+id/ivDelCart"
         android:layout_width="30dp"

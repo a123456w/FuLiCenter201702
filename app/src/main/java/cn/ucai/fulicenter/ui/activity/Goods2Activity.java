@@ -240,4 +240,30 @@ public class Goods2Activity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+    @OnClick(R.id.ivAddCart)
+    public void onCartClick(View view){
+        if(FuLiCenterApplication.getInstance().isLogined()){
+            addCart();
+        }else {
+            startActivityForResult(new Intent(Goods2Activity.this,LoginActivity.class),0);
+        }
+    }
+
+    private void addCart() {
+        model.addCart(Goods2Activity.this, mGoodsid, user.getMuserName(), I.ADD_CART_COUNT, false
+                , new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if(result!=null && result.isSuccess()){
+                    CommonUtils.showLongToast(R.string.add_goods_success);
+                }else {
+                    CommonUtils.showLongToast(R.string.add_goods_fail);
+                }
+            }
+            @Override
+            public void onError(String error) {
+                CommonUtils.showLongToast(R.string.add_goods_fail);
+            }
+        });
+    }
 }
