@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.ui.fiagment;
 
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,15 +26,11 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CartBean;
-import cn.ucai.fulicenter.data.bean.NewGoodsBean;
 import cn.ucai.fulicenter.data.bean.User;
-import cn.ucai.fulicenter.data.net.DownNewGoodMode;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.net.adapter.CartAdapter;
-import cn.ucai.fulicenter.data.net.adapter.NewGoodsAdapter;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
-import cn.ucai.fulicenter.ui.view.SpaceItemDecoration;
 
 
 /**
@@ -54,7 +51,15 @@ public class CartFragment extends Fragment {
     GridLayoutManager gm;
     DownUserMode mode;
     ProgressDialog dialog;
-    ArrayList<CartBean> list=new ArrayList<>();
+    ArrayList<CartBean> list = new ArrayList<>();
+    @BindView(R.id.btnClearing)
+    Button btnClearing;
+    @BindView(R.id.tvTotal)
+    TextView tvTotal;
+    @BindView(R.id.tvSave)
+    TextView tvSave;
+    @BindView(R.id.rlClearing)
+    RelativeLayout rlClearing;
 
 
   /*  int catId=I.CAT_ID;
@@ -62,11 +67,12 @@ public class CartFragment extends Fragment {
 
     public CartFragment() {
     }
-   /* public CartFragment(int catId) {
-        this.catId=catId;
-    }*/
+
+    /* public CartFragment(int catId) {
+         this.catId=catId;
+     }*/
     @OnClick(R.id.tvNoMore)
-    public void onClick(View v){
+    public void onClick(View v) {
         dialog.show();
         loadData();
     }
@@ -89,14 +95,14 @@ public class CartFragment extends Fragment {
     }
 
     private void initDialog() {
-        dialog=new ProgressDialog(getContext());
+        dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.load_more));
         dialog.show();
     }
 
     private void initView() {
-        mode=new DownUserMode();
-        gm=new GridLayoutManager(getContext(),I.COLUM_NUM);
+        mode = new DownUserMode();
+        gm = new GridLayoutManager(getContext(), I.COLUM_NUM);
         gm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -125,59 +131,69 @@ public class CartFragment extends Fragment {
             }
         });
     }
-    void setVisibility(boolean Visibility){
+
+    void setVisibility(boolean Visibility) {
         srl.setRefreshing(Visibility);
-        tvDownHint.setVisibility(Visibility?View.VISIBLE:View.GONE);
-    };
-    void setlistVisibility(boolean visibility){
-        tvNoMore.setVisibility(visibility?View.GONE:View.VISIBLE);
-        srl.setVisibility(visibility?View.VISIBLE:View.GONE);
+        tvDownHint.setVisibility(Visibility ? View.VISIBLE : View.GONE);
+    }
+
+    ;
+
+    void setlistVisibility(boolean visibility, boolean isEinty) {
+        tvNoMore.setText(isEinty ? R.string.no_more : R.string.no_cart);
+        tvNoMore.setVisibility(visibility ? View.GONE : View.VISIBLE);
+        srl.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        rlClearing.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     private void loadData() {
-        if( FuLiCenterApplication.getInstance().isLogined()){
+        if (FuLiCenterApplication.getInstance().isLogined()) {
             User user = FuLiCenterApplication.getInstance().getUser();
             mode.loadCart(getContext(), user.getMuserName(), new OnCompleteListener<CartBean[]>() {
                 @Override
                 public void onSuccess(CartBean[] result) {
                     setVisibility(false);
-                    setlistVisibility(true);
+                    setlistVisibility(true, true);
                     list.clear();
-                    if(result!=null){
-                        list.addAll( ResultUtils.array2List(result));
-                        Log.i("main","loadData.lsit="+list);
-                        Log.i("main","loadData.result="+result.length);
+                    if (result != null) {
+                        list.addAll(ResultUtils.array2List(result));
+                        Log.i("main", "loadData.lsit=" + list);
+                        Log.i("main", "loadData.result=" + result.length);
                         updateUI();
-                        dialog.dismiss();
-                        Log.i("main",result.length+"");
-                    }else {
-
-                        if(Adapter==null){
-                            dialog.dismiss();
-                            setlistVisibility(false);
+                        dismissDialog();
+                        Log.i("main", result.length + "");
+                        if (list.size() == 0) {
+                            setlistVisibility(false, false);
                         }
-
-                    }
-                    if(Adapter!=null){
-                        setlistVisibility(true);
+                    } else {
+                        dismissDialog();
+                        setlistVisibility(false, true);
                     }
                 }
 
                 @Override
                 public void onError(String error) {
-                    setlistVisibility(false);
                     list.clear();
-                    Log.e("main",error.toString());
+                    setVisibility(false);
+                    dismissDialog();
+                    setlistVisibility(false, true);
+                    Log.e("main", error.toString());
                 }
             });
         }
     }
 
+    public void dismissDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
     private void updateUI() {
-        if(Adapter==null){
-            Adapter=new CartAdapter(getContext(),list);
+        if (Adapter == null) {
+            Adapter = new CartAdapter(getContext(), list);
             rvGoods.setAdapter(Adapter);
-        }else {
+        } else {
             Adapter.notifyDataSetChanged();
         }
     }

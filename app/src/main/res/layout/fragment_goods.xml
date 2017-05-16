@@ -1,7 +1,8 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
@@ -30,10 +31,9 @@
     </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/tvNoMore"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:text="@string/no_more"/>
-</RelativeLayout>
+</LinearLayout>

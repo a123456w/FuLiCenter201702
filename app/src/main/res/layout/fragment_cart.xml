@@ -8,6 +8,7 @@
     <RelativeLayout
         android:id="@+id/rlClearing"
         android:background="#fff"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="80dp">

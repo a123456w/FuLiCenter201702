@@ -21,6 +21,7 @@ import cn.ucai.fulicenter.data.bean.CartBean;
 import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
 import cn.ucai.fulicenter.ui.activity.MainActivity;
+import cn.ucai.fulicenter.ui.fiagment.CartFragment;
 
 /**
  * Created by Administrator on 2017/5/15 0015.
@@ -80,13 +81,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                     tvCartName.setText(goods.getGoodsName());
                     tvTotal.setText(goods.getCurrencyPrice());
                     radioBtn.setChecked(bean.isChecked());
+                    tvNumber.setText(String.valueOf(bean.getCount()));
+
                     ivCart.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             ((MainActivity)context).startActivityForResult(
                                     new Intent()
                                     .putExtra(I.Goods.KEY_GOODS_ID,goods.getGoodsId())
-                                    ,0
+                                    ,I.REQUEST_CODE_LOGIN_FROM_CART
                             );
                         }
                     });
