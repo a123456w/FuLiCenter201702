@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         mFragments[0] = mGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2] = mCategoryFragment;
-
         mFragments[3]=mCartFragment;
         mFragments[4] = mCanterFragment;
     }
@@ -97,9 +97,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tvCategory:
                 index = 2;
                 break;
+            case R.id.tv_Cart:
+                if (!FuLiCenterApplication.getInstance().isLogined()) {
+                    startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), I.REQUEST_CODE_LOGIN_FROM_CART);
+                } else {
+                    index = 3;
+                }
+                break;
             case R.id.tv_Canter:
-                L.e("main","index="+index);
-                if (FuLiCenterApplication.getUser() == null) {
+                if (!FuLiCenterApplication.getInstance().isLogined()) {
                     startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), I.REQUEST_CODE_LOGIN);
                 } else {
                     index = 4;
@@ -113,10 +119,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         L.e("main","onActivityResult"+index);
-        if(resultCode==RESULT_OK&&requestCode==I.REQUEST_CODE_LOGIN){
-            index=4;
+        if(resultCode==RESULT_OK) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                index = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                index = 3;
+            }
+            setFragment();
         }
-        setFragment();
     }
 
     private void setFragment() {

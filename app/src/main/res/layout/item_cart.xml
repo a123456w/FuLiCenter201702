@@ -2,19 +2,27 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:background="#dcf">
-    <RadioButton
+    android:layout_height="120dp"
+    android:background="#fff">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ccc"/>
+    <CheckBox
         android:id="@+id/radioBtn"
         android:layout_centerVertical="true"
+        style="@style/CustomCheckboxTheme"
+        android:checked="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/ivCart"
         android:paddingRight="8dp"
         android:layout_toRightOf="@id/radioBtn"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_centerVertical="true"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
     <TextView
         android:id="@+id/tvCartName"
         android:paddingTop="5dp"
@@ -82,13 +90,4 @@
         android:textSize="27dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"/>
-    <TextView
-        android:text="￥"
-        android:textSize="27dp"
-        android:textColor="#f5faa701"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/tvTotal"
-        android:layout_centerVertical="true"/>
-
 </RelativeLayout>

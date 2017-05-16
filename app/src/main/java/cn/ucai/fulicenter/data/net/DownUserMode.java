@@ -116,7 +116,7 @@ public class DownUserMode implements IDownUser {
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_ADD_CART)
                 .addParam(I.Cart.GOODS_ID,String.valueOf(goodsId))
-                .addParam(I.User.USER_NAME,username)
+                .addParam(I.Cart.USER_NAME,username)
                 .addParam(I.Cart.COUNT,String.valueOf(count))
                 .addParam(I.Cart.IS_CHECKED,String.valueOf(isChecked))
                 .targetClass(MessageBean.class)
@@ -147,7 +147,7 @@ public class DownUserMode implements IDownUser {
     public void loadCart(Context context, String username, OnCompleteListener<CartBean[]> listener) {
         OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CARTS)
-                .addParam(I.User.USER_NAME,username)
+                .addParam(I.Cart.USER_NAME,username)
                 .targetClass(CartBean[].class)
                 .execute(listener);
     }

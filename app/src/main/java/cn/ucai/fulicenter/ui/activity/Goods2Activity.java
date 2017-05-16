@@ -203,18 +203,15 @@ public class Goods2Activity extends AppCompatActivity {
     }
 
     private void addCollect() {
-        Log.i("main","Goods2Activity.onUpdataCollect.addCollect mGoodsid= "+mGoodsid);
         model.addCollects(Goods2Activity.this, String.valueOf(mGoodsid), user.getMuserName(),
                 new OnCompleteListener<MessageBean>() {
                     @Override
                     public void onSuccess(MessageBean result) {
-                        Log.i("main","Goods2Activity.onUpdataCollect.addCollect isCollect=false"+result.toString());
                         setUi(result);
                     }
 
                     @Override
                     public void onError(String error) {
-                        Log.i("main","Goods2Activity.onUpdataCollect.setUi result!=null"+error.toString());
                     }
                 });
     }
@@ -222,7 +219,6 @@ public class Goods2Activity extends AppCompatActivity {
     private void setUi(MessageBean result) {
 
         if(result!=null&&result.isSuccess()){
-            Log.i("main","Goods2Activity.onUpdataCollect.setUi result!=null");
             isCollect=!isCollect;
             updataUi();
         }
@@ -255,6 +251,7 @@ public class Goods2Activity extends AppCompatActivity {
             @Override
             public void onSuccess(MessageBean result) {
                 if(result!=null && result.isSuccess()){
+                    Log.i("main","addCart.result="+ result.isSuccess()+"mGoodsid="+mGoodsid+" user.getMuserName()="+user.getMuserName()+"  I.ADD_CART_COUNT="+I.ADD_CART_COUNT );
                     CommonUtils.showLongToast(R.string.add_goods_success);
                 }else {
                     CommonUtils.showLongToast(R.string.add_goods_fail);
