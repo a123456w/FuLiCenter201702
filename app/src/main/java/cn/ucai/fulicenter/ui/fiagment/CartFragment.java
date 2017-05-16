@@ -26,6 +26,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CartBean;
+import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
@@ -181,6 +182,27 @@ public class CartFragment extends Fragment {
                 }
             });
         }
+    }
+    public void sumPrice(){
+        int sumPrice=0;
+        int savePrice=0;
+        if(list.size()>0){
+            for (CartBean cartBean : list) {
+                GoodsDetailsBean goods = cartBean.getGoods();
+                if(goods!=null){
+                    sumPrice += getPrice(goods.getCurrencyPrice())*cartBean.getCount();
+                    savePrice+=(getPrice(goods.getCurrencyPrice())-getPrice(goods.getRankPrice()))
+                            *cartBean.getCount();
+                }
+            }
+        }
+        tvTotal.setText(String.valueOf(sumPrice));
+        tvSave.setText(String.valueOf(savePrice));
+    }
+
+    private int getPrice(String currencyPrice) {
+        String price = currencyPrice.substring(currencyPrice.indexOf("￥"));
+        return Integer.parseInt(price);
     }
 
     public void dismissDialog() {
