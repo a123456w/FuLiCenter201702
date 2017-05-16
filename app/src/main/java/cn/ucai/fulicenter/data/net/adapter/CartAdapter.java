@@ -21,6 +21,7 @@ import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CartBean;
 import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.data.utils.ImageLoader;
+import cn.ucai.fulicenter.ui.activity.Goods2Activity;
 import cn.ucai.fulicenter.ui.activity.MainActivity;
 import cn.ucai.fulicenter.ui.fiagment.CartFragment;
 
@@ -83,7 +84,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
             super(view);
             ButterKnife.bind(this, view);
         }
-
         public void bind(int position) {
             CartBean bean = list.get(position);
             if(bean!=null){
@@ -98,7 +98,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                         @Override
                         public void onClick(View v) {
                             ((MainActivity)context).startActivityForResult(
-                                    new Intent()
+                                    new Intent(context, Goods2Activity.class)
                                     .putExtra(I.Goods.KEY_GOODS_ID,goods.getGoodsId())
                                     ,I.REQUEST_CODE_LOGIN_FROM_CART
                             );

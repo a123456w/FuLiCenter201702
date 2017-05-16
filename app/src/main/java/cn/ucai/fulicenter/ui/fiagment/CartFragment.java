@@ -222,14 +222,18 @@ public class CartFragment extends Fragment {
     View.OnClickListener Clicklistener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.ivAddCart){
-                int position = (int) v.getTag();
-                updateCart(position,1);
+            int position=0;
+            switch (v.getId()){
+                case R.id.ivAddCart:
+                    position = (int) v.getTag();
+                    updateCart(position,1);
+                    break;
+                case R.id.ivDelCart:
+                    position = (int) v.getTag();
+                    updateCart(position,-1);
+                    break;
             }
-            if(v.getId()==R.id.ivDelCart){
-                int position = (int) v.getTag();
-                updateCart(position,-1);
-            }
+
         }
     };
 
@@ -238,8 +242,10 @@ public class CartFragment extends Fragment {
         if(bean.isChecked()){
             if(bean.getCount()>1){
                 addDelCart(position, count, bean);
-            }else{
+            } else if (count < 0) {
                 removeCart(position, bean);
+            } else {
+                addDelCart(position, count, bean);
             }
 
         }
@@ -251,6 +257,7 @@ public class CartFragment extends Fragment {
             public void onSuccess(MessageBean result) {
                 list.remove(position);
                 Adapter.notifyDataSetChanged();
+                setlistVisibility(false,false);
             }
 
             @Override
@@ -258,9 +265,6 @@ public class CartFragment extends Fragment {
 
             }
         });
-            if(list.size()==1&&bean.getCount()==1){
-                setlistVisibility(false,false);
-            }
 
 
     }
