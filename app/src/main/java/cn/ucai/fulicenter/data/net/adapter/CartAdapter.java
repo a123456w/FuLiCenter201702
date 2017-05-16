@@ -108,6 +108,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                     radioBtn.setOnCheckedChangeListener(cclListener);
                     ivAddCart.setTag(position);
                     ivAddCart.setOnClickListener(Clicklistener);
+                    ivDelCart.setTag(position);
+                    ivDelCart.setOnClickListener(Clicklistener);
 
                 }
             }

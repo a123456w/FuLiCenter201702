@@ -109,9 +109,6 @@ public class CartFragment extends Fragment {
         gm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-              /*  if(Adapter==null||position==Adapter.getItemCount()-1){
-                    return I.COLUM_NUM;
-                }*/
                 return 2;
             }
         });
@@ -123,6 +120,12 @@ public class CartFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 
     private void setListener() {
@@ -219,31 +222,66 @@ public class CartFragment extends Fragment {
     View.OnClickListener Clicklistener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int position = (int) v.getTag();
-            updateCart(position,1);
+            if(v.getId()==R.id.ivAddCart){
+                int position = (int) v.getTag();
+                updateCart(position,1);
+            }
+            if(v.getId()==R.id.ivDelCart){
+                int position = (int) v.getTag();
+                updateCart(position,-1);
+            }
         }
     };
 
     private void updateCart(final int position, final int count) {
         final CartBean bean = list.get(position);
         if(bean.isChecked()){
-            mode.updateCart(getContext(), bean.getId(), bean.getCount() + count, false,
-                    new OnCompleteListener<MessageBean>() {
-                        @Override
-                        public void onSuccess(MessageBean result) {
-                            if(result!=null && result.isSuccess()){
-                                list.get(position).setCount(bean.getCount() + count);
-                                Adapter.notifyDataSetChanged();
-                                sumPrice();
-                            }
-                        }
+            if(bean.getCount()>1){
+                addDelCart(position, count, bean);
+            }else{
+                removeCart(position, bean);
+            }
 
-                        @Override
-                        public void onError(String error) {
-
-                        }
-                    });
         }
+    }
+
+    private void removeCart(final int position, CartBean bean) {
+        mode.removeCart(getContext(), bean.getId(), new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                list.remove(position);
+                Adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+            if(list.size()==1&&bean.getCount()==1){
+                setlistVisibility(false,false);
+            }
+
+
+    }
+
+    private void addDelCart(final int position, final int count, final CartBean bean) {
+        mode.updateCart(getContext(), bean.getId(), bean.getCount() + count, false,
+                new OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if(result!=null && result.isSuccess()){
+                            list.get(position).setCount(bean.getCount() + count);
+                            Adapter.notifyDataSetChanged();
+                            sumPrice();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
     }
 
     private int getPrice(String currencyPrice) {
