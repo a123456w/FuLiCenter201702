@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -30,6 +31,17 @@ import cn.ucai.fulicenter.ui.fiagment.CartFragment;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     Context context;
     ArrayList<CartBean> list;
+    CompoundButton.OnCheckedChangeListener cclListener;
+
+    View.OnClickListener Clicklistener;
+
+    public void setClicklistener(View.OnClickListener clicklistener) {
+        Clicklistener = clicklistener;
+    }
+
+    public void setCclListener(CompoundButton.OnCheckedChangeListener cclListener) {
+        this.cclListener = cclListener;
+    }
 
     public CartAdapter(Context context, ArrayList<CartBean> list) {
         this.context = context;
@@ -82,7 +94,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                     tvTotal.setText(goods.getCurrencyPrice());
                     radioBtn.setChecked(bean.isChecked());
                     tvNumber.setText(String.valueOf(bean.getCount()));
-
                     ivCart.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -93,6 +104,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                             );
                         }
                     });
+                    radioBtn.setTag(position);
+                    radioBtn.setOnCheckedChangeListener(cclListener);
+                    ivAddCart.setTag(position);
+                    ivAddCart.setOnClickListener(Clicklistener);
+
                 }
             }
         }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import cn.ucai.fulicenter.application.FuLiCenterApplication;
 import cn.ucai.fulicenter.application.I;
 import cn.ucai.fulicenter.data.bean.CartBean;
 import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.data.bean.MessageBean;
 import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
@@ -127,6 +129,8 @@ public class CartFragment extends Fragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                tvTotal.setText(String.valueOf(0));
+                tvSave.setText(String.valueOf(0));
                 setVisibility(true);
                 loadData();
             }
@@ -189,19 +193,61 @@ public class CartFragment extends Fragment {
         if(list.size()>0){
             for (CartBean cartBean : list) {
                 GoodsDetailsBean goods = cartBean.getGoods();
-                if(goods!=null){
+                if(cartBean.isChecked()){
                     sumPrice += getPrice(goods.getCurrencyPrice())*cartBean.getCount();
-                    savePrice+=(getPrice(goods.getCurrencyPrice())-getPrice(goods.getRankPrice()))
+                    savePrice +=(getPrice(goods.getCurrencyPrice())-getPrice(goods.getRankPrice()))
                             *cartBean.getCount();
                 }
             }
+        }else {
+            sumPrice=0;
+            savePrice=0;
         }
         tvTotal.setText(String.valueOf(sumPrice));
+        Log.i("main","sumPrice="+sumPrice);
         tvSave.setText(String.valueOf(savePrice));
+        Log.i("main","savePrice="+savePrice);
+    }
+    CompoundButton.OnCheckedChangeListener checklistener= new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int  position = (int) buttonView.getTag();
+            list.get(position).setChecked(isChecked);
+            sumPrice();
+        }
+    };
+    View.OnClickListener Clicklistener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = (int) v.getTag();
+            updateCart(position,1);
+        }
+    };
+
+    private void updateCart(final int position, final int count) {
+        final CartBean bean = list.get(position);
+        if(bean.isChecked()){
+            mode.updateCart(getContext(), bean.getId(), bean.getCount() + count, false,
+                    new OnCompleteListener<MessageBean>() {
+                        @Override
+                        public void onSuccess(MessageBean result) {
+                            if(result!=null && result.isSuccess()){
+                                list.get(position).setCount(bean.getCount() + count);
+                                Adapter.notifyDataSetChanged();
+                                sumPrice();
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    });
+        }
     }
 
     private int getPrice(String currencyPrice) {
-        String price = currencyPrice.substring(currencyPrice.indexOf("￥"));
+        String price = currencyPrice.substring(currencyPrice.indexOf("￥")+1);
         return Integer.parseInt(price);
     }
 
@@ -214,7 +260,10 @@ public class CartFragment extends Fragment {
     private void updateUI() {
         if (Adapter == null) {
             Adapter = new CartAdapter(getContext(), list);
+            Adapter.setCclListener(checklistener);
+            Adapter.setClicklistener(Clicklistener);
             rvGoods.setAdapter(Adapter);
+
         } else {
             Adapter.notifyDataSetChanged();
         }
@@ -226,9 +275,4 @@ public class CartFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-    /*public void shorAdapter(int shortBy){
-        if(Adapter!=null){
-            Adapter.shortByList(shortBy);
-        }
-    }*/
 }
