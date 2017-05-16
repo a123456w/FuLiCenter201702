@@ -20,7 +20,8 @@
         android:paddingTop="5dp"
         android:layout_toRightOf="@id/ivCart"
         android:textSize="22dp"
-        android:text="werwerewrwe"
+        android:ellipsize="end"
+        android:text="werwerewrssssss3sdfsd"
         android:textColor="#f5faa701"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -14,6 +14,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.data.bean.CartBean;
+import cn.ucai.fulicenter.data.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.data.utils.ImageLoader;
 
 /**
  * Created by Administrator on 2017/5/15 0015.
@@ -36,39 +38,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
 
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
-        CartBean bean = list.get(position);
-        //ImageLoader.downloadImg(context,holder.ivCart,bean.get);
-
-        holder.ivAddCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = holder.tvNumber.getText().toString();
-                int number = Integer.parseInt(s);
-                int a=++number;
-                holder.tvNumber.setText(String.valueOf(a));
-            }
-        });
-        holder.ivDelCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = holder.tvNumber.getText().toString();
-                int number = Integer.parseInt(s);
-                int a=--number;
-                if(a>0){
-                    holder.tvNumber.setText(String.valueOf(a));
-                }
-                if(a==0){
-                    list.remove(position);
-                    notifyDataSetChanged();
-                }
-            }
-        });
-        boolean checked = holder.radioBtn.isChecked();
-        if(checked){
-            String s = holder.tvNumber.getText().toString();
-            int number = Integer.parseInt(s);
-        }
-
+        holder.bind(position);
     }
 
     @Override
@@ -95,6 +65,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
         CartHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void bind(int position) {
+            CartBean bean = list.get(position);
+            if(bean!=null){
+                GoodsDetailsBean goods = bean.getGoods();
+                if(goods!=null){
+                    ImageLoader.downloadImg(context,ivCart,goods.getGoodsImg());
+                    tvCartName.setText(goods.getGoodsName());
+                    tvTotal.setText(goods.getCurrencyPrice());
+                    radioBtn.setChecked(bean.isChecked());
+                }
+            }
         }
     }
 
