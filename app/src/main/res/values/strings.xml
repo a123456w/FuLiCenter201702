@@ -49,4 +49,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update_user">修改用户信息</string>
+    <string name="no_name">姓名不可为空</string>
+    <string name="phone">手机号格式不正确</string>
+    <string name="nophone">手机号不能为空</string>
+    <string name="street">详细地址不能为空</string>
 </resources>

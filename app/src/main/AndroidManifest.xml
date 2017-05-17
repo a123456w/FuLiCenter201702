@@ -5,8 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".application.FuLiCenterApplication"
@@ -28,16 +27,18 @@
         <activity
             android:name=".ui.activity.Categroy_Activity"
             android:launchMode="standard" />
-        <activity android:name=".ui.activity.LoginActivity"/>
-        <activity android:name=".ui.activity.RegistrActivity"/>
-        <activity android:name=".ui.activity.SetUserActivity"/>
-        <activity android:name=".ui.activity.UpNickActivity"/>
-        <activity android:name=".ui.utils.ClipImageActivity"/>
-        <activity android:name=".ui.activity.CollectActivity"/>
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.RegistrActivity" />
+        <activity android:name=".ui.activity.SetUserActivity" />
+        <activity android:name=".ui.activity.UpNickActivity" />
+        <activity android:name=".ui.utils.ClipImageActivity" />
+        <activity android:name=".ui.activity.CollectActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".ui.activity.OrderActivity"></activity>
     </application>
 
 </manifest>

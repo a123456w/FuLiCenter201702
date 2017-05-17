@@ -60,6 +60,7 @@ public class Goods2Activity extends AppCompatActivity {
     @BindView(R.id.ivCollect)
     ImageView ivCollect;
     boolean isCollect;
+    GoodsDetailsBean mGoodsDetailsBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +105,7 @@ public class Goods2Activity extends AppCompatActivity {
             @Override
             public void onSuccess(GoodsDetailsBean data) {
                 if (data != null) {
+                    mGoodsDetailsBean=data;
                     setView(data);
                     setImg(data);
                 }
@@ -167,17 +169,13 @@ public class Goods2Activity extends AppCompatActivity {
 
     @OnClick(R.id.ivCollect)
     public void onUpdataCollect() {
-        Log.i("main","Goods2Activity.onUpdataCollect");
         user = FuLiCenterApplication.getInstance().getUser();
         if(user==null){
             startActivityForResult(new Intent(Goods2Activity.this,LoginActivity.class),0);
         }else{
-            Log.i("main","Goods2Activity.onUpdataCollect user!=null");
             if(isCollect){
-                Log.i("main","Goods2Activity.onUpdataCollect isCollect=true");
                 removeCollect();
             }else{
-                Log.i("main","Goods2Activity.onUpdataCollect isCollect=false");
                 addCollect();
             }
         }
@@ -207,6 +205,7 @@ public class Goods2Activity extends AppCompatActivity {
                 new OnCompleteListener<MessageBean>() {
                     @Override
                     public void onSuccess(MessageBean result) {
+
                         setUi(result);
                     }
 
@@ -251,8 +250,10 @@ public class Goods2Activity extends AppCompatActivity {
             @Override
             public void onSuccess(MessageBean result) {
                 if(result!=null && result.isSuccess()){
-                    Log.i("main","addCart.result="+ result.isSuccess()+"mGoodsid="+mGoodsid+" user.getMuserName()="+user.getMuserName()+"  I.ADD_CART_COUNT="+I.ADD_CART_COUNT );
                     CommonUtils.showLongToast(R.string.add_goods_success);
+                    sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART)
+                            .putExtra(I.Cart.class.toString(),mGoodsDetailsBean)
+                    );
                 }else {
                     CommonUtils.showLongToast(R.string.add_goods_fail);
                 }

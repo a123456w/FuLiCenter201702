@@ -2,6 +2,10 @@ package cn.ucai.fulicenter.ui.fiagment;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -33,7 +38,9 @@ import cn.ucai.fulicenter.data.bean.User;
 import cn.ucai.fulicenter.data.net.DownUserMode;
 import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.net.adapter.CartAdapter;
+import cn.ucai.fulicenter.data.utils.CommonUtils;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
+import cn.ucai.fulicenter.ui.activity.OrderActivity;
 
 import static cn.ucai.fulicenter.R.attr.count;
 
@@ -65,6 +72,7 @@ public class CartFragment extends Fragment {
     TextView tvSave;
     @BindView(R.id.rlClearing)
     RelativeLayout rlClearing;
+    CartBroadcastReceiver mReceiver=new CartBroadcastReceiver();
 
 
   /*  int catId=I.CAT_ID;
@@ -124,12 +132,6 @@ public class CartFragment extends Fragment {
         );
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
-    }
-
     private void setListener() {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -138,6 +140,9 @@ public class CartFragment extends Fragment {
                 loadData();
             }
         });
+        IntentFilter intentFilter = new IntentFilter(I.BROADCAST_UPDATA_CART);
+        getContext().registerReceiver(mReceiver,intentFilter);
+
     }
 
     void setVisibility(boolean Visibility) {
@@ -188,9 +193,10 @@ public class CartFragment extends Fragment {
         }
 
     }
+    int sumPrice,savePrice;
     public void sumPrice(){
-        int sumPrice=0;
-        int savePrice=0;
+        sumPrice=0;
+        savePrice=0;
         if(list.size()>0){
             for (CartBean cartBean : list) {
                 GoodsDetailsBean goods = cartBean.getGoods();
@@ -240,6 +246,10 @@ public class CartFragment extends Fragment {
                 addDelCart(position, count, bean);
             } else if (count < 0) {
                 removeCart(position, bean);
+                if(list.size()==1){
+                    setlistVisibility(false,false);
+                }
+
             } else {
                 addDelCart(position, count, bean);
             }
@@ -247,13 +257,12 @@ public class CartFragment extends Fragment {
         }
     }
 
-    private void removeCart(final int position, CartBean bean) {
+    private void removeCart(final int position, final CartBean bean) {
         mode.removeCart(getContext(), bean.getId(), new OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
                 list.remove(position);
                 Adapter.notifyDataSetChanged();
-                setlistVisibility(false,false);
             }
 
             @Override
@@ -312,5 +321,51 @@ public class CartFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+    class CartBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            GoodsDetailsBean bean = (GoodsDetailsBean) intent.getSerializableExtra(I.Cart.class.toString());
+            upCart(bean);
+
+        }
+    }
+    boolean isEmpty=false;
+    private void upCart(GoodsDetailsBean bean) {
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getId()==bean.getId()){
+                list.get(i).setCount(list.get(i).getCount()+1);
+                isEmpty=true;
+
+                return;
+            }
+        }
+        /*for (CartBean cartBean : list) {
+            if(cartBean.getId()==bean.getId()){
+                cartBean.setCount(cartBean.getCount()+1);
+                isEmpty=true;
+                sumPrice();
+                return;
+            }
+        }*/
+        if(!isEmpty){
+            CartBean cartBean = new CartBean();
+            cartBean.setCount(1);
+            cartBean.setChecked(true);
+            cartBean.setUserName(FuLiCenterApplication.getInstance().getUser().getMuserName());
+            cartBean.setGoods(bean);
+            list.add(cartBean);
+        }
+        Adapter.notifyDataSetChanged();
+        sumPrice();
+    }
+    @OnClick(R.id.btnClearing)
+    public void onOrderClick(View v){
+        if(sumPrice>0){
+            startActivity(new Intent(getContext(), OrderActivity.class).putExtra(I.Cart.PAY_PRICE,sumPrice-savePrice));
+        }else{
+            CommonUtils.showLongToast(R.string.order_nothing);
+        }
     }
 }
