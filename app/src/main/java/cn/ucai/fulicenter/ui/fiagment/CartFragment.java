@@ -35,6 +35,8 @@ import cn.ucai.fulicenter.data.net.OnCompleteListener;
 import cn.ucai.fulicenter.data.net.adapter.CartAdapter;
 import cn.ucai.fulicenter.data.utils.ResultUtils;
 
+import static cn.ucai.fulicenter.R.attr.count;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,8 +134,6 @@ public class CartFragment extends Fragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                tvTotal.setText(String.valueOf(0));
-                tvSave.setText(String.valueOf(0));
                 setVisibility(true);
                 loadData();
             }
@@ -165,11 +165,9 @@ public class CartFragment extends Fragment {
                     list.clear();
                     if (result != null) {
                         list.addAll(ResultUtils.array2List(result));
-                        Log.i("main", "loadData.lsit=" + list);
-                        Log.i("main", "loadData.result=" + result.length);
                         updateUI();
+                        sumPrice();
                         dismissDialog();
-                        Log.i("main", result.length + "");
                         if (list.size() == 0) {
                             setlistVisibility(false, false);
                         }
@@ -185,10 +183,10 @@ public class CartFragment extends Fragment {
                     setVisibility(false);
                     dismissDialog();
                     setlistVisibility(false, true);
-                    Log.e("main", error.toString());
                 }
             });
         }
+
     }
     public void sumPrice(){
         int sumPrice=0;
@@ -207,9 +205,7 @@ public class CartFragment extends Fragment {
             savePrice=0;
         }
         tvTotal.setText(String.valueOf(sumPrice));
-        Log.i("main","sumPrice="+sumPrice);
         tvSave.setText(String.valueOf(savePrice));
-        Log.i("main","savePrice="+savePrice);
     }
     CompoundButton.OnCheckedChangeListener checklistener= new CompoundButton.OnCheckedChangeListener() {
         @Override

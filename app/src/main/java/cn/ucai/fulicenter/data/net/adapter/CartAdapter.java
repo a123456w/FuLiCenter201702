@@ -86,8 +86,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
         }
         public void bind(int position) {
             CartBean bean = list.get(position);
+
             if(bean!=null){
                 final GoodsDetailsBean goods = bean.getGoods();
+                radioBtn.setOnCheckedChangeListener(null);
                 if(goods!=null){
                     ImageLoader.downloadImg(context,ivCart,goods.getGoodsImg());
                     tvCartName.setText(goods.getGoodsName());
