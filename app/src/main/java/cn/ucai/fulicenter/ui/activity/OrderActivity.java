@@ -55,14 +55,20 @@ public class OrderActivity extends AppCompatActivity {
     TextView tvOrderPrice;
     @BindView(R.id.layout_order)
     android.widget.RelativeLayout layoutOrder;
-    int Extra=0;
+    int OrderPrice=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-         Extra= getIntent().getIntExtra(I.Cart.PAY_PRICE, 0);
+        OrderPrice= getIntent().getIntExtra(I.Cart.PAY_PRICE, 0);
         ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+        tvOrderPrice.setText("合计：￥ "+OrderPrice);
+        tvTitle.setText("支付页面");
     }
 
     @OnClick({R.id.ivTitle, R.id.tv_order_buy})
@@ -92,7 +98,7 @@ public class OrderActivity extends AppCompatActivity {
             CommonUtils.showLongToast(R.string.street);
             return false;
         }
-        if(edOrderPhone.getText().toString().matches("[1][0-9]{10}")){
+        if(!edOrderPhone.getText().toString().matches("[\\d]{11}")){
             CommonUtils.showLongToast(R.string.phone);
             return false;
         }

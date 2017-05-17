@@ -63,7 +63,7 @@ public class CartFragment extends Fragment {
     GridLayoutManager gm;
     DownUserMode mode;
     ProgressDialog dialog;
-    ArrayList<CartBean> list = new ArrayList<>();
+    ArrayList<CartBean> list ;
     @BindView(R.id.btnClearing)
     Button btnClearing;
     @BindView(R.id.tvTotal)
@@ -95,6 +95,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, null);
         unbinder = ButterKnife.bind(this, view);
+        list=new ArrayList<>();
         return view;
     }
 
@@ -331,24 +332,19 @@ public class CartFragment extends Fragment {
 
         }
     }
-    boolean isEmpty=false;
-    private void upCart(GoodsDetailsBean bean) {
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getId()==bean.getId()){
-                list.get(i).setCount(list.get(i).getCount()+1);
-                isEmpty=true;
 
-                return;
-            }
-        }
-        /*for (CartBean cartBean : list) {
-            if(cartBean.getId()==bean.getId()){
+    private void upCart(GoodsDetailsBean bean) {
+        boolean isEmpty=false;
+        for (CartBean cartBean : list) {
+            if(cartBean.getGoodsId()==bean.getGoodsId()){
                 cartBean.setCount(cartBean.getCount()+1);
                 isEmpty=true;
+                Adapter.notifyDataSetChanged();
                 sumPrice();
-                return;
+               return;
             }
-        }*/
+        }
+
         if(!isEmpty){
             CartBean cartBean = new CartBean();
             cartBean.setCount(1);
@@ -356,9 +352,10 @@ public class CartFragment extends Fragment {
             cartBean.setUserName(FuLiCenterApplication.getInstance().getUser().getMuserName());
             cartBean.setGoods(bean);
             list.add(cartBean);
+            Adapter.notifyDataSetChanged();
+            sumPrice();
         }
-        Adapter.notifyDataSetChanged();
-        sumPrice();
+
     }
     @OnClick(R.id.btnClearing)
     public void onOrderClick(View v){
